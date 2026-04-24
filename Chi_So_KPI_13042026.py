@@ -19,16 +19,79 @@ def resource_path(relative_path):
         base_path = os.path.dirname(os.path.abspath(__file__))
     return os.path.join(base_path, relative_path)
 
-# ===== KIỂM TRA FILE / SHEET / CỘT =====
+# ===== KIỂM TRA FILE / SHEET / CỘT ===== CHÍNH ====
+# FILE_CONFIG = {
+#     "file1": {
+#         "path": r"\\vdm-fsvr\Cokhi-機工\CONG VIEC CHUNG 2026\22. BAO CAO MMK\DU LIEU\T3\thoi_gian_gia_cong.xlsx",
+#         "sheets": {
+#             "Thời gian gia công": {"min_cols": 12}
+#         }
+#     },
+#     "file2": {
+#         "path": r"\\vdm-fsvr\Cokhi-機工\CONG VIEC CHUNG 2026\22. BAO CAO MMK\DU LIEU\T3\Download1_2.xlsx",
+#         "sheets": {
+#             "Tỉ lệ hoạt động máy": {"min_cols": 3},
+#             "BV,PCS HT trong tháng theo CĐ": {"min_cols": 3},
+#             "Nhận BV,PCS trong tháng": {"min_cols": 5},
+#         }
+#     },
+#     "file3": {
+#         "path": r"\\vdm-fsvr\Cokhi-機工\CONG VIEC CHUNG 2026\22. BAO CAO MMK\DU LIEU\T3\Download2_2026-02-26_2026-03-30.xlsx",
+#         "sheets": {
+#             "Số tiền hoàn thành": {"min_cols": 44},
+#             "Tuân Thủ Kì Hạn": {"min_cols": 18},
+#         }
+#     },
+#     "file4": {
+#         "path": r"\\vdm-fsvr\Cokhi-機工\CONG VIEC CHUNG 2026\22. BAO CAO MMK\DU LIEU\T3\Download3_2026-02-26 07_00_00_2026-03-30 06_59_00.xlsx",
+#         "sheets": {
+#             "BV.PCS Tồn đọng": {"min_cols": 5}
+#         }
+#     },
+#     "file6": {
+#         "path": r"\\vdm-fsvr\Cokhi-機工\CONG VIEC CHUNG 2026\22. BAO CAO MMK\DU LIEU\T3\Thong ke thoi gian CD.xlsx",
+#         "sheets": {
+#             "Thống kê thời gian công đoạn": {"min_cols": 5}
+#         }
+#     },
+#     "file7": {
+#         "path": r"\\vdm-fsvr\Cokhi-機工\CONG VIEC CHUNG 2026\22. BAO CAO MMK\DU LIEU\T3\2026　VDM管理指標　（　月） QLTB-T3.xlsx",
+#         "sheets": {
+#             "指標２(外作)": {"min_cols": 5},
+#             "指標４（生産性）": {"min_cols": 10},
+#         }
+#     },
+#     "file8": {
+#         "path": r"\\vdm-fsvr\Cokhi-機工\CONG VIEC CHUNG 2026\22. BAO CAO MMK\DU LIEU\T3\THỜI GIAN LÀM VIỆC VÀ THỜI GIAN TĂNG CA PHÒNG CƠ KHÍ THÁNG 03.2026.xlsx",
+#         "sheets": {
+#             "GOC": {"min_cols": 8}
+#         }
+#     },
+#     "file9": {
+#         "path": r"\\vdm-fsvr\Cokhi-機工\CONG VIEC CHUNG 2026\14 .BÂT HỢP CÁCH  2026\1.BHC CÔNG ĐOẠN - KIỂM TRA  2026.xlsx",
+#         "sheets": {
+#             "BHCKT26": {"min_cols": 1},
+#             "BHCCD26": {"min_cols": 20},
+#         }
+#     },
+#     "file10": {
+#         "path": r"\\vdm-fsvr\Cokhi-機工\CONG VIEC CHUNG 2026\14 .BÂT HỢP CÁCH  2026\11.KNKH 2026.xlsx",
+#         "sheets": {
+#             "KHIEU NAI BANG VAN BAN - BC MMK": {"min_cols": 14}
+#         }
+#     },
+# }
+
+# ===== KIỂM TRA FILE / SHEET / CỘT ===== PHỤ ====
 FILE_CONFIG = {
     "file1": {
-        "path": r"\\vdm-fsvr\Cokhi-機工\CONG VIEC CHUNG 2026\22. BAO CAO MMK\DU LIEU\T3\thoi_gian_gia_cong.xlsx",
+        "path": r"D:\Code_cokhi\Bao_Cao_MMK_KPI\T3\thoi_gian_gia_cong.xlsx",
         "sheets": {
             "Thời gian gia công": {"min_cols": 12}
         }
     },
     "file2": {
-        "path": r"\\vdm-fsvr\Cokhi-機工\CONG VIEC CHUNG 2026\22. BAO CAO MMK\DU LIEU\T3\Download1_2.xlsx",
+        "path": r"D:\Code_cokhi\Bao_Cao_MMK_KPI\T3\Download1_2.xlsx",
         "sheets": {
             "Tỉ lệ hoạt động máy": {"min_cols": 3},
             "BV,PCS HT trong tháng theo CĐ": {"min_cols": 3},
@@ -36,48 +99,54 @@ FILE_CONFIG = {
         }
     },
     "file3": {
-        "path": r"\\vdm-fsvr\Cokhi-機工\CONG VIEC CHUNG 2026\22. BAO CAO MMK\DU LIEU\T3\Download2_2026-02-26_2026-03-30.xlsx",
+        "path": r"D:\Code_cokhi\Bao_Cao_MMK_KPI\T3\Download2_2026-02-26_2026-03-30.xlsx",
         "sheets": {
             "Số tiền hoàn thành": {"min_cols": 44},
             "Tuân Thủ Kì Hạn": {"min_cols": 18},
         }
     },
     "file4": {
-        "path": r"\\vdm-fsvr\Cokhi-機工\CONG VIEC CHUNG 2026\22. BAO CAO MMK\DU LIEU\T3\Download3_2026-02-26 07_00_00_2026-03-30 06_59_00.xlsx",
+        "path": r"D:\Code_cokhi\Bao_Cao_MMK_KPI\T3\Download3_2026-02-26 07_00_00_2026-03-30 06_59_00.xlsx",
         "sheets": {
             "BV.PCS Tồn đọng": {"min_cols": 5}
         }
     },
     "file6": {
-        "path": r"\\vdm-fsvr\Cokhi-機工\CONG VIEC CHUNG 2026\22. BAO CAO MMK\DU LIEU\T3\Thong ke thoi gian CD.xlsx",
+        "path": r"D:\Code_cokhi\Bao_Cao_MMK_KPI\T3\Thong ke thoi gian CD.xlsx",
         "sheets": {
             "Thống kê thời gian công đoạn": {"min_cols": 5}
         }
     },
     "file7": {
-        "path": r"\\vdm-fsvr\Cokhi-機工\CONG VIEC CHUNG 2026\22. BAO CAO MMK\DU LIEU\T3\2026　VDM管理指標　（　月） QLTB-T3.xlsx",
+        "path": r"D:\Code_cokhi\Bao_Cao_MMK_KPI\T3\2026　VDM管理指標　（　月） QLTB-T3.xlsx",
         "sheets": {
             "指標２(外作)": {"min_cols": 5},
             "指標４（生産性）": {"min_cols": 10},
         }
     },
     "file8": {
-        "path": r"\\vdm-fsvr\Cokhi-機工\CONG VIEC CHUNG 2026\22. BAO CAO MMK\DU LIEU\T3\THỜI GIAN LÀM VIỆC VÀ THỜI GIAN TĂNG CA PHÒNG CƠ KHÍ THÁNG 03.2026.xlsx",
+        "path": r"D:\Code_cokhi\Bao_Cao_MMK_KPI\T3\THỜI GIAN LÀM VIỆC VÀ THỜI GIAN TĂNG CA PHÒNG CƠ KHÍ THÁNG 03.2026.xlsx",
         "sheets": {
             "GOC": {"min_cols": 8}
         }
     },
     "file9": {
-        "path": r"\\vdm-fsvr\Cokhi-機工\CONG VIEC CHUNG 2026\14 .BÂT HỢP CÁCH  2026\1.BHC CÔNG ĐOẠN - KIỂM TRA  2026.xlsx",
+        "path": r"D:\Code_cokhi\Bao_Cao_MMK_KPI\14 .BAT_HOP_CACH_2026\1.BHC CÔNG ĐOẠN - KIỂM TRA  2026.xlsx",
         "sheets": {
             "BHCKT26": {"min_cols": 1},
             "BHCCD26": {"min_cols": 20},
         }
     },
     "file10": {
-        "path": r"\\vdm-fsvr\Cokhi-機工\CONG VIEC CHUNG 2026\14 .BÂT HỢP CÁCH  2026\11.KNKH 2026.xlsx",
+        "path": r"D:\Code_cokhi\Bao_Cao_MMK_KPI\14 .BAT_HOP_CACH_2026\KNKH 2026.xlsx",
         "sheets": {
             "KHIEU NAI BANG VAN BAN - BC MMK": {"min_cols": 14}
+        }
+    },
+    "file11": {
+        "path": r"D:\Code_cokhi\Bao_Cao_MMK_KPI\T3",
+        "sheets": {
+            "So_tien_HT": {"min_cols": 14},
         }
     },
 }
@@ -1228,17 +1297,49 @@ def run_kpi():
 
     col_machine = excel_col(12 + month - 1)  # L = tháng 1
 
+    # --- Cache time GJ ---
+    gj_total_time = machine_time.get("GJ", 0)
+    gj_half_time = gj_total_time / 2 if gj_total_time else 0
+
     for row in range(5, ws_machine.max_row + 1):
         raw_code = get_merged_cell_value(ws_machine, row, 3)
         mc = normalize_machine_code(raw_code)
-        if mc:
-            ws_machine[f"{col_machine}{row}"] = machine_time.get(mc, 0)
-            ws_machine[f"{col_machine}{row}"].number_format = "#,##0"
 
-    # Tổng số ngày làm việc (hàng 2)
+        if not mc:
+            continue
+
+        cell = f"{col_machine}{row}"
+
+        # =========================
+        # ✅ RULE ĐẶC BIỆT: GJ
+        # =========================
+        if mc == "GJ02":
+            ws_machine[cell] = gj_half_time
+            ws_machine[cell].number_format = "#,##0"
+
+        elif mc == "GJ03":
+            ws_machine[cell] = gj_half_time
+            ws_machine[cell].number_format = "#,##0"
+
+        elif mc == "GJ":
+            # ❌ KHÔNG ghi trực tiếp GJ
+            ws_machine[cell] = 0
+
+        # =========================
+        # ✅ RULE BÌNH THƯỜNG
+        # =========================
+        else:
+            ws_machine[cell] = machine_time.get(mc, 0)
+            ws_machine[cell].number_format = "#,##0"
+
+    # Tổng số ngày làm việc
     ws_machine[f"{col_machine}2"] = work_days
     ws_machine[f"{col_machine}2"].number_format = "#,##0"
 
+    print(
+        f"🔧 GJ split check: GJ total = {gj_total_time}, "
+        f"GJ02 = {gj_half_time}, GJ03 = {gj_half_time}"
+    )
     # --------------------------------------------------
     # (2) BV,PCS HT TRONG THÁNG THEO CĐ → 指標２(内作)
     # --------------------------------------------------
@@ -1360,15 +1461,40 @@ def run_kpi():
     )
 
     col_stt = df_nhan.iloc[:, 0]
+    col_code_c = df_nhan.iloc[:, 2].astype(str).str.strip().str.upper()  # CỘT C
     col_qty = pd.to_numeric(df_nhan.iloc[:, 4], errors="coerce")
 
-    total_rows = col_stt.notna().sum()
-    total_quantity = col_qty.sum()
+    # ✅ Loại các dòng có "DC-EN-" ở cột C
+    EXCLUDE_PATTERNS = ["DC-EN-"]
+
+    mask_exclude = col_code_c.str.contains(
+        "|".join(EXCLUDE_PATTERNS),
+        na=False
+    )
+
+    # ✅ CHỈ GIỮ DÒNG HỢP LỆ:
+    #   - Có STT
+    #   - KHÔNG chứa DC-EN-
+    mask_valid = col_stt.notna() & ~mask_exclude
+
+    df_nhan_valid = df_nhan[mask_valid]
+
+    # =============================
+    # TÍNH TOÁN SAU LỌC
+    # =============================
+    total_rows = df_nhan_valid.iloc[:, 0].notna().sum()
+    total_quantity = pd.to_numeric(
+        df_nhan_valid.iloc[:, 4],
+        errors="coerce"
+    ).sum()
 
     print(
-        f"✅ FILE 2: Nhận BV = {total_rows} dòng, "
-        f"PCS = {total_quantity}"
+        "✅ NHẬN BV,PCS – AFTER FILTER\n"
+        f"   Tổng BV hợp lệ = {total_rows}\n"
+        f"   Tổng PCS hợp lệ = {total_quantity}\n"
+        f"   Bị loại DC-EN- = {mask_exclude.sum()}"
     )
+
 
     ws_kpi1 = wb["指標1"]
     col_kpi1 = excel_col(2 + month - 1)  # B = tháng 1
@@ -1387,7 +1513,7 @@ def run_kpi():
 
     print("✅ FILE 2: Ghi dữ liệu xong")
 
-# ==================================================
+    # ==================================================
     # FILE 4 – BV.PCS TỒN ĐỌNG
     # ==================================================
     path_file4 = FILE_CONFIG["file4"]["path"]
@@ -1397,12 +1523,48 @@ def run_kpi():
         sheet_name="BV.PCS Tồn đọng",
         header=0
     )
-
-    col_stt_ton = df_ton.iloc[:, 0]
+    
+    col_stt = df_ton.iloc[:, 0]
+    col_code_c = df_ton.iloc[:, 2].astype(str).str.strip().str.upper()  # ✅ CỘT C
     col_qty_ton = pd.to_numeric(df_ton.iloc[:, 4], errors="coerce")
 
-    total_rows_ton = col_stt_ton.notna().sum()
-    total_qty_ton = col_qty_ton.sum()
+    # --------------------------------------------------
+    # ✅ PRE-FILTER: LOẠI DC-EN-
+    # --------------------------------------------------
+    EXCLUDE_PATTERNS = ["DC-EN-"]
+
+    mask_exclude_dc_en = col_code_c.str.contains(
+        "|".join(EXCLUDE_PATTERNS),
+        na=False
+    )
+
+    # --------------------------------------------------
+    # ✅ GIỮ DÒNG HỢP LỆ:
+    #   - Có STT
+    #   - PCS > 0
+    #   - KHÔNG phải DC-EN-
+    # --------------------------------------------------
+    mask_valid = (
+        col_stt.notna() &
+        (col_qty_ton > 0) &
+        ~mask_exclude_dc_en
+    )
+
+    df_ton_valid = df_ton[mask_valid] 
+    total_rows_ton = df_ton_valid.iloc[:, 0].notna().sum()
+    total_qty_ton = pd.to_numeric(
+        df_ton_valid.iloc[:, 4],
+        errors="coerce"
+    ).sum()
+
+
+    print(
+        "✅ FILE 4 – BV.PCS TỒN ĐỌNG (AFTER FILTER)\n"
+        f"   BV tồn hợp lệ     = {total_rows_ton}\n"
+        f"   PCS tồn hợp lệ    = {total_qty_ton}\n"
+        f"   Bị loại DC-EN-    = {mask_exclude_dc_en.sum()}"
+    )
+
 
     ws_kpi1 = wb["指標1"]
     col_kpi1 = excel_col(2 + month - 1)
@@ -1415,7 +1577,7 @@ def run_kpi():
     ws_kpi1[f"{col_kpi1}9"] = total_qty_ton
     ws_kpi1[f"{col_kpi1}9"].number_format = "#,##0"
 
-    print(f"✅ FILE 4: BV tồn={total_rows_ton}, PCS tồn={total_qty_ton}")
+    # print(f"✅ FILE 4: BV tồn={total_rows_ton}, PCS tồn={total_qty_ton}")
 
     # ==================================================
     # FILE 3 – SỐ TIỀN HOÀN THÀNH
@@ -1429,10 +1591,30 @@ def run_kpi():
     )
 
     col_key = df_ht.iloc[:, 0].astype(str).str.strip()
-    col_c = df_ht.iloc[:, 2].astype(str).str.strip()
+    col_c   = df_ht.iloc[:, 2].astype(str).str.strip().str.upper()  # ✅ CỘT C
     col_qty = pd.to_numeric(df_ht.iloc[:, 5], errors="coerce")
-    col_aq = pd.to_numeric(df_ht.iloc[:, 42], errors="coerce")
-    col_ar = df_ht.iloc[:, 43].astype(str).str.strip()
+    col_aq  = pd.to_numeric(df_ht.iloc[:, 42], errors="coerce")
+    col_ar  = df_ht.iloc[:, 43].astype(str).str.strip()
+
+    # =============================
+    # ✅ PRE-FILTER: LOẠI DC-EN-
+    # =============================
+    EXCLUDE_PATTERNS = ["DC-EN-"]
+
+    mask_exclude_dc_en = col_c.str.contains(
+        "|".join(EXCLUDE_PATTERNS),
+        na=False
+    )
+
+    df_ht_pf = df_ht[~mask_exclude_dc_en]
+
+    # =============================
+    # ✅ BUSINESS FILTER (GIỮ NGUYÊN LOGIC CŨ)
+    # =============================
+    col_key_pf = df_ht_pf.iloc[:, 0].astype(str).str.strip()
+    col_c_pf   = df_ht_pf.iloc[:, 2].astype(str).str.strip()
+    col_ar_pf  = df_ht_pf.iloc[:, 43].astype(str).str.strip()
+
 
     mask_keep = col_ar == "Bản vẽ hoàn thành"
     mask_exclude = col_key.str.startswith(("412", "L412", "R412")) & col_c.str.startswith("C")
@@ -1454,11 +1636,19 @@ def run_kpi():
     ws_kpi1[f"{col_kpi1}29"] = total_rows_ht
     ws_kpi1[f"{col_kpi1}14"] = total_qty_ht
 
-    # 指標4
-    ws_kpi4[f"{col_kpi4}38"] = total_money_usd
-    ws_kpi4[f"{col_kpi4}38"].number_format = "#,##0"
+    # # 指標4
+    # ws_kpi4[f"{col_kpi4}38"] = total_money_usd
+    # ws_kpi4[f"{col_kpi4}38"].number_format = "#,##0"
 
-    print(f"✅ FILE 3: BV HT={total_rows_ht}, PCS HT={total_qty_ht}, USD={total_money_usd:,.0f}")
+
+    print(
+        "✅ FILE 3 – SỐ TIỀN HOÀN THÀNH (AFTER FILTER)\n"
+        f"   Dòng hợp lệ        = {total_rows_ht}\n"
+        f"   Tổng PCS           = {total_qty_ht}\n"
+        # f"   Tổng tiền (VND)    = {total_money_vnd:,.0f}\n"
+        f"   Bị loại DC-EN-     = {mask_exclude_dc_en.sum()}"
+    )
+
     # ==================================================
     # FILE 3 (TIẾP) – TUÂN THỦ KÌ HẠN
     # TÍNH LT: KHUÔN / KHÁC / L213
@@ -1468,6 +1658,28 @@ def run_kpi():
         sheet_name="Tuân Thủ Kì Hạn",
         header=0
     )
+    
+    # --------------------------------------------------
+    # ✅ PRE-FILTER: LOẠI DC-EN- Ở CỘT C
+    # --------------------------------------------------
+    col_code_c = df_ttkh.iloc[:, 2].astype(str).str.strip().str.upper()
+
+    EXCLUDE_PATTERNS = ["DC-EN-"]
+
+    mask_exclude_dc_en = col_code_c.str.contains(
+        "|".join(EXCLUDE_PATTERNS),
+        na=False
+    )
+
+    df_ttkh_pf = df_ttkh[~mask_exclude_dc_en]
+
+    print(
+        "✅ TUÂN THỦ KÌ HẠN – AFTER DC-EN FILTER\n"
+        f"   Tổng dòng ban đầu = {len(df_ttkh)}\n"
+        f"   Bị loại DC-EN-    = {mask_exclude_dc_en.sum()}\n"
+        f"   Còn lại xử lý     = {len(df_ttkh_pf)}"
+    )
+
 
     # ---- 1) TẬP KEY ĐÃ HOÀN THÀNH (từ FILE 3 – Số tiền hoàn thành)
     valid_keys = set(
@@ -1846,10 +2058,10 @@ def run_kpi():
     print("\n================ ROW 18 – BEGIN DEBUG ================")
 
     # ==================================================
-    # FILE 8 – GIỜ NHÂN SỰ (GOC)
+    # FILE 8 – GIỜ NHÂN SỰ (GOC) – CHỈ NV CÒN LÀM VIỆC
     # ==================================================
-    hours_11928_file8 = sum_gh_each[mn_col == "11928"].sum()
-    hours_12157_file8 = sum_gh_each[mn_col == "12157"].sum()
+    hours_11928_file8 = sum_gh_each[(mn_col == "11928") & mask_row10].sum()
+    hours_12157_file8 = sum_gh_each[(mn_col == "12157") & mask_row10].sum()
 
     print(
         "📘 FILE 8 – GOC (GIỜ CÔNG)\n"
@@ -1860,56 +2072,44 @@ def run_kpi():
     # ==================================================
     # FILE 1 – THỜI GIAN GIA CÔNG
     # ==================================================
-    nv_col   = df_tg.iloc[:, 7].astype(str).str.strip()
-    type_col = df_tg.iloc[:, 8].astype(str).str.strip()
-    time_l   = pd.to_numeric(df_tg.iloc[:, 11], errors="coerce")  # phút
-
-    print(
-        "📘 FILE 1 – RAW INFO\n"
-        f"   Tổng dòng = {len(df_tg)}\n"
-        f"   NV 11928 (count) = {(nv_col == '11928').sum()}\n"
-        f"   NV 12157 (count) = {(nv_col == '12157').sum()}\n"
-        f"   Type M (count)   = {(type_col == 'M').sum()}"
-    )
+    machine_col = df_tg.iloc[:, 6].astype(str).str.strip()   # CỘT G – SỐ MÁY
+    nv_col      = df_tg.iloc[:, 7].astype(str).str.strip()
+    type_col    = df_tg.iloc[:, 8].astype(str).str.strip()
+    time_l      = pd.to_numeric(df_tg.iloc[:, 11], errors="coerce")  # phút
 
     # --------------------------------------------------
-    # FILE 1 – GIỜ THEO NV (PHÚT → GIỜ)
+    # FILE 1 – GIỜ NV 11928
     # --------------------------------------------------
     total_hours_11928 = time_l[nv_col == "11928"].sum() / 60
-    total_hours_12157 = time_l[nv_col == "12157"].sum() / 60
-
-    print(
-        "⏱ FILE 1 – GIA CÔNG THEO NV (GIỜ)\n"
-        f"   NV 11928 = {total_hours_11928:.2f}\n"
-        f"   NV 12157 = {total_hours_12157:.2f}"
-    )
 
     # --------------------------------------------------
-    # FILE 1 – GIỜ LOẠI M
+    # FILE 1 – GIỜ MÁY AA (KHÔNG TÍNH PHIẾU M)
     # --------------------------------------------------
-    total_hours_M = time_l[type_col == "M"].sum() / 60
+    mask_AA_no_M = (machine_col == "AA") & (type_col != "M")
+    total_hours_AA_no_M = time_l[mask_AA_no_M].sum() / 60
 
-    print(
-        "⏱ FILE 1 – LOẠI M\n"
-        f"   Tổng giờ M = {total_hours_M:.2f}"
-    )
+    # --------------------------------------------------
+    # FILE 1 – GIỜ LOẠI M (KHÔNG TRÙNG NV 11928)
+    # --------------------------------------------------
+    mask_M_only = (type_col == "M") & (~nv_col.isin(["11928"]))
+    total_hours_M = time_l[mask_M_only].sum() / 60
 
     # ==================================================
-    # NET SAU TRỪ FILE 8 (VÁ CHỐNG ÂM)
+    # NET SAU TRỪ FILE 8 (KHÓA ÂM)
     # ==================================================
     final_11928 = max(0, total_hours_11928 - hours_11928_file8)
-    final_12157 = max(0, total_hours_12157 - hours_12157_file8)
+    final_12157 = max(0, total_hours_AA_no_M - hours_12157_file8)
 
     print(
         "➖ NET SAU TRỪ FILE 8\n"
-        f"   NV 11928 = {total_hours_11928:.2f} - {hours_11928_file8:.2f}"
+        f"   NV 11928  = {total_hours_11928:.2f} - {hours_11928_file8:.2f}"
         f" → {final_11928:.2f}\n"
-        f"   NV 12157 = {total_hours_12157:.2f} - {hours_12157_file8:.2f}"
-        f" → {final_12157:.2f}"
+        f"   NV 12157* = {total_hours_AA_no_M:.2f} - {hours_12157_file8:.2f}"
+        f" → {final_12157:.2f}  (MÁY AA – NO M)"
     )
 
     # ==================================================
-    # TÍNH ROW 18 (NET – KHÓA ÂM)
+    # TÍNH ROW 18
     # ==================================================
     total_deduct = final_11928 + final_12157 + total_hours_M
     row18_value = max(0, total_time_j_hours - total_deduct)
@@ -1918,7 +2118,7 @@ def run_kpi():
         "🧮 TÍNH HÀNG 18\n"
         f"   Tổng J (giờ)   = {total_time_j_hours:.2f}\n"
         f"   Trừ 11928     = {final_11928:.2f}\n"
-        f"   Trừ 12157     = {final_12157:.2f}\n"
+        f"   Trừ AA (12157)= {final_12157:.2f}\n"
         f"   Trừ M         = {total_hours_M:.2f}\n"
         f"   → ROW 18 NET  = {row18_value:.2f}"
     )
@@ -1930,6 +2130,7 @@ def run_kpi():
     ws_kpi4[f"{col_kpi4}18"].number_format = "#,##0"
 
     print("================= ROW 18 – END DEBUG =================\n")
+
 
 
     # ==================================================
@@ -1963,6 +2164,52 @@ def run_kpi():
     ws_kpi1[f"{col_kpi1}89"].number_format = "#,##0"
 
     print(f"✅ FILE 10: Khiếu nại T{month} = {knkh_cases}")
+
+    # ==================================================
+    # FILE 11 – SỐ TIỀN HOÀN THÀNH (BÁO CÁO KPI MMK)
+    # ==================================================
+    path_file11 = FILE_CONFIG["file11"]["path"]
+    sheet_file11 = "So_tien_HT"
+
+    df_f11 = pd.read_excel(
+        path_file11,
+        sheet_name=sheet_file11,
+        header=0
+    )
+
+    # -----------------------------
+    # HÀNG 3 = index 2
+    # Cột T1 = C = index 2 → + (month - 1)
+    # -----------------------------
+    row_money_vnd = 2
+    col_month_idx = 2 + (month - 1)
+
+    money_vnd = pd.to_numeric(
+        df_f11.iloc[row_money_vnd, col_month_idx],
+        errors="coerce"
+    )
+
+    money_usd = money_vnd / EXCHANGE_RATE if pd.notna(money_vnd) else 0
+
+    print(
+        "✅ FILE 11 – SỐ TIỀN HOÀN THÀNH\n"
+        f"   VND = {money_vnd:,.0f}\n"
+        f"   USD = {money_usd:,.0f} (rate {EXCHANGE_RATE})"
+    )
+    # ==================================================
+    # GHI VÀO 指標４（生産性) – HÀNG 38
+    # ==================================================
+    ws_kpi4 = wb["指標４（生産性) "]
+    col_kpi4 = excel_col(9 + month - 1)  # I = tháng 1
+
+    ws_kpi4[f"{col_kpi4}38"] = money_usd
+    ws_kpi4[f"{col_kpi4}38"].number_format = "#,##0"
+
+    print(
+        f"✅ 指標４（生産性) | Row 38 | Cột {col_kpi4}\n"
+        f"   Giá trị ghi = {money_usd:,.0f} USD"
+    )
+
 
     wb.save(current_file)
     print("✅ KPI BATCH HOÀN TẤT")
