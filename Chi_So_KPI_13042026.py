@@ -80,6 +80,12 @@ def resource_path(relative_path):
 #             "KHIEU NAI BANG VAN BAN - BC MMK": {"min_cols": 14}
 #         }
 #     },
+#     "file11": {
+#             "path": r"D:\Code_cokhi\Bao_Cao_MMK_KPI\T3",
+#             "sheets": {
+#                 "So_tien_HT": {"min_cols": 14},
+#             }
+#         },
 # }
 
 # ===== KIỂM TRA FILE / SHEET / CỘT ===== PHỤ ====
@@ -91,7 +97,7 @@ FILE_CONFIG = {
         }
     },
     "file2": {
-        "path": r"D:\Code_cokhi\Bao_Cao_MMK_KPI\T3\Download1_2.xlsx",
+        "path": r"D:\Code_cokhi\Bao_Cao_MMK_KPI\T3_New\Download1_2.xlsx",
         "sheets": {
             "Tỉ lệ hoạt động máy": {"min_cols": 3},
             "BV,PCS HT trong tháng theo CĐ": {"min_cols": 3},
@@ -99,14 +105,14 @@ FILE_CONFIG = {
         }
     },
     "file3": {
-        "path": r"D:\Code_cokhi\Bao_Cao_MMK_KPI\T3\Download2_2026-02-26_2026-03-30.xlsx",
+        "path": r"D:\Code_cokhi\Bao_Cao_MMK_KPI\T3_New\Download2_2026-02-26_2026-03-30.xlsx",
         "sheets": {
             "Số tiền hoàn thành": {"min_cols": 44},
             "Tuân Thủ Kì Hạn": {"min_cols": 18},
         }
     },
     "file4": {
-        "path": r"D:\Code_cokhi\Bao_Cao_MMK_KPI\T3\Download3_2026-02-26 07_00_00_2026-03-30 06_59_00.xlsx",
+        "path": r"D:\Code_cokhi\Bao_Cao_MMK_KPI\T3_New\Download3_2026-02-26 07_00_00_2026-03-30 06_59_00.xlsx",
         "sheets": {
             "BV.PCS Tồn đọng": {"min_cols": 5}
         }
