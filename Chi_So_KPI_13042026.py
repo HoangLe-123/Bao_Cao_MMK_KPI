@@ -91,7 +91,7 @@ def resource_path(relative_path):
 # ===== KIỂM TRA FILE / SHEET / CỘT ===== PHỤ ====
 FILE_CONFIG = {
     "file1": {
-        "path": r"D:\Code_cokhi\Bao_Cao_MMK_KPI\T3\thoi_gian_gia_cong.xlsx",
+        "path": r"D:\Code_cokhi\Bao_Cao_MMK_KPI\T3_New\thoi_gian_gia_cong.xlsx",
         "sheets": {
             "Thời gian gia công": {"min_cols": 12}
         }
@@ -150,7 +150,7 @@ FILE_CONFIG = {
         }
     },
     "file11": {
-        "path": r"D:\Code_cokhi\Bao_Cao_MMK_KPI\T3",
+        "path": r"D:\Code_cokhi\Bao_Cao_MMK_KPI\T3_New\SO TIEN HOAN THANH - BC KPMMMK.xlsx",
         "sheets": {
             "So_tien_HT": {"min_cols": 14},
         }
@@ -1161,10 +1161,75 @@ def get_merged_cell_value(ws, row, col):
     
 
 
-        
+def read_money_vnd_from_file11(
+    file_path: str,
+    sheet_name: str,
+    month: int,
+    exchange_rate: float,
+    debug: bool = True
+):
+    import unicodedata, re
+    import pandas as pd
+
+    def norm(s):
+        s = unicodedata.normalize("NFKD", str(s))
+        s = "".join(c for c in s if not unicodedata.combining(c))
+        s = s.lower()
+        s = re.sub(r"[^a-z0-9]", "", s)
+        return s
+
+    df = pd.read_excel(file_path, sheet_name=sheet_name, header=None)
+
+    key_money = norm("Số tiền hoàn thành")
+    key_vnd   = norm("VND")
+
+    money_row = None
+
+    # ✅ QUÉT TOÀN SHEET – CHỈ NHẬN DÒNG CÓ BOTH: 'SỐ TIỀN HOÀN THÀNH' + 'VND'
+    for r in range(df.shape[0]):
+        row_text = "".join(norm(v) for v in df.iloc[r].values if isinstance(v, str))
+        if key_money in row_text and key_vnd in row_text:
+            money_row = r
+            break
+
+    if money_row is None:
+        raise Exception("❌ Không tìm thấy dòng 'Số tiền hoàn thành (VND)' trong FILE 11")
+
+    # ✅ CỘT THEO THÁNG (T1 = C = index 2)
+    col_month = 2 + (month - 1)
+
+    raw = df.iat[money_row, col_month]
+
+    money_vnd = (
+        str(raw)
+        .replace(",", "")
+        .replace(".", "")
+        .replace(" ", "")
+    )
+
+    money_vnd = pd.to_numeric(money_vnd, errors="coerce")
+    money_vnd = 0 if pd.isna(money_vnd) else money_vnd
+
+    money_usd = money_vnd / exchange_rate if exchange_rate else 0
+
+    if debug:
+        print(
+            "✅ FILE 11 – READ MONEY (FINAL)\n"
+            f"   Money row      = {money_row}\n"
+            f"   Month col      = {col_month}\n"
+            f"   Raw cell       = {raw}\n"
+            f"   Money VND      = {money_vnd:,.0f}\n"
+            f"   Exchange rate  = {exchange_rate}\n"
+            f"   Money USD      = {money_usd:,.0f}"
+        )
+
+    return money_vnd, money_usd
+
+
 def run_kpi():
     print("=== START KPI BATCH ===")
 
+    total_rows_ht = 0
     # =============================
     # THÁNG / NĂM BÁO CÁO
     # =============================
@@ -1256,7 +1321,7 @@ def run_kpi():
 
     ws_kpi1 = wb["指標1"]
 
-    completed_bv = bhckt_count + bhccd_count if (bhckt_count + bhccd_count) > 0 else 0
+    completed_bv = total_rows_ht if (bhckt_count + bhccd_count) > 0 else 0
 
     if completed_bv > 0:
         row79_value = 1 - (bhckt_count / completed_bv)
@@ -1607,29 +1672,27 @@ def run_kpi():
     # =============================
     EXCLUDE_PATTERNS = ["DC-EN-"]
 
-    mask_exclude_dc_en = col_c.str.contains(
-        "|".join(EXCLUDE_PATTERNS),
-        na=False
+    # ✅ PRE-FILTER: LOẠI DC-EN NGAY TỪ GỐC
+    mask_exclude_dc_en = col_c.str.contains("|".join(EXCLUDE_PATTERNS), na=False)
+
+    df_ht_clean = df_ht[~mask_exclude_dc_en]
+
+    col_key_c = df_ht_clean.iloc[:, 0].astype(str).str.strip()
+    col_c_c   = df_ht_clean.iloc[:, 2].astype(str).str.strip().str.upper()
+    col_ar_c  = df_ht_clean.iloc[:, 43].astype(str).str.strip()
+
+    mask_keep = col_ar_c == "Bản vẽ hoàn thành"
+    mask_exclude = (
+        col_key_c.str.startswith(("412", "L412", "R412"))
+        & col_c_c.str.startswith("C")
     )
 
-    df_ht_pf = df_ht[~mask_exclude_dc_en]
-
-    # =============================
-    # ✅ BUSINESS FILTER (GIỮ NGUYÊN LOGIC CŨ)
-    # =============================
-    col_key_pf = df_ht_pf.iloc[:, 0].astype(str).str.strip()
-    col_c_pf   = df_ht_pf.iloc[:, 2].astype(str).str.strip()
-    col_ar_pf  = df_ht_pf.iloc[:, 43].astype(str).str.strip()
-
-
-    mask_keep = col_ar == "Bản vẽ hoàn thành"
-    mask_exclude = col_key.str.startswith(("412", "L412", "R412")) & col_c.str.startswith("C")
-
-    df_valid = df_ht[mask_keep & ~mask_exclude]
+    df_valid = df_ht_clean[mask_keep & ~mask_exclude]
 
     total_rows_ht = df_valid.shape[0]
-    total_qty_ht = col_qty[mask_keep & ~mask_exclude].sum()
-    total_money_vnd = col_aq[mask_keep & ~mask_exclude].sum()
+    total_qty_ht = pd.to_numeric(df_valid.iloc[:, 5], errors="coerce").sum()
+
+    total_money_vnd = pd.to_numeric(df_valid.iloc[:, 42], errors="coerce").sum()
     total_money_usd = total_money_vnd / EXCHANGE_RATE
 
     ws_kpi1 = wb["指標1"]
@@ -1677,14 +1740,14 @@ def run_kpi():
         na=False
     )
 
-    df_ttkh_pf = df_ttkh[~mask_exclude_dc_en]
 
     print(
         "✅ TUÂN THỦ KÌ HẠN – AFTER DC-EN FILTER\n"
         f"   Tổng dòng ban đầu = {len(df_ttkh)}\n"
         f"   Bị loại DC-EN-    = {mask_exclude_dc_en.sum()}\n"
-        f"   Còn lại xử lý     = {len(df_ttkh_pf)}"
+        f"   Còn lại xử lý     = {len(df_ttkh)}"
     )
+
 
 
     # ---- 1) TẬP KEY ĐÃ HOÀN THÀNH (từ FILE 3 – Số tiền hoàn thành)
@@ -2034,11 +2097,18 @@ def run_kpi():
     # ==================================================
 
     # Cột J, K trong sheet "Tuân Thủ Kì Hạn"
-    time_j = pd.to_numeric(df_ttkh.iloc[:, 9], errors="coerce")    # J (phút)
-    time_k = pd.to_numeric(df_ttkh.iloc[:, 10], errors="coerce")  # K (phút)
+    # ✅ LOẠI DC-EN TRONG TUÂN THỦ KÌ HẠN
+    tt_code_c = df_ttkh.iloc[:, 2].astype(str).str.strip().str.upper()
+    mask_not_dc_en_ttkh = ~tt_code_c.str.contains("DC-EN-", na=False)
 
+
+
+    # ✅ CỘT J, K – PHÚT
+    time_j = pd.to_numeric(df_ttkh.iloc[:, 9], errors="coerce")
+    time_k = pd.to_numeric(df_ttkh.iloc[:,10], errors="coerce")
     total_time_j_hours = time_j[mask_match].sum() / 60
     total_time_k_hours = time_k[mask_match].sum() / 60
+
 
     ws_kpi4 = wb["指標４（生産性) "]
     col_kpi4 = excel_col(9 + month - 1)
@@ -2171,37 +2241,22 @@ def run_kpi():
 
     print(f"✅ FILE 10: Khiếu nại T{month} = {knkh_cases}")
 
+
     # ==================================================
     # FILE 11 – SỐ TIỀN HOÀN THÀNH (BÁO CÁO KPI MMK)
     # ==================================================
+
     path_file11 = FILE_CONFIG["file11"]["path"]
     sheet_file11 = "So_tien_HT"
 
-    df_f11 = pd.read_excel(
-        path_file11,
+    money_vnd, money_usd = read_money_vnd_from_file11(
+        file_path=path_file11,
         sheet_name=sheet_file11,
-        header=0
+        month=month,
+        exchange_rate=EXCHANGE_RATE,   # ✅ TỶ GIÁ MẶC ĐỊNH
+        debug=True
     )
 
-    # -----------------------------
-    # HÀNG 3 = index 2
-    # Cột T1 = C = index 2 → + (month - 1)
-    # -----------------------------
-    row_money_vnd = 2
-    col_month_idx = 2 + (month - 1)
-
-    money_vnd = pd.to_numeric(
-        df_f11.iloc[row_money_vnd, col_month_idx],
-        errors="coerce"
-    )
-
-    money_usd = money_vnd / EXCHANGE_RATE if pd.notna(money_vnd) else 0
-
-    print(
-        "✅ FILE 11 – SỐ TIỀN HOÀN THÀNH\n"
-        f"   VND = {money_vnd:,.0f}\n"
-        f"   USD = {money_usd:,.0f} (rate {EXCHANGE_RATE})"
-    )
     # ==================================================
     # GHI VÀO 指標４（生産性) – HÀNG 38
     # ==================================================
@@ -2215,6 +2270,15 @@ def run_kpi():
         f"✅ 指標４（生産性) | Row 38 | Cột {col_kpi4}\n"
         f"   Giá trị ghi = {money_usd:,.0f} USD"
     )
+
+
+    print(
+        "✅ FILE 11 – SỐ TIỀN HOÀN THÀNH\n"
+        f"   VND      = {money_vnd:,.0f}\n"
+        f"   USD      = {money_usd:,.0f}\n"
+        f"   RATE     = {EXCHANGE_RATE}"
+    )
+
 
 
     wb.save(current_file)
