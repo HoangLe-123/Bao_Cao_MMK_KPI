@@ -20,84 +20,15 @@ def resource_path(relative_path):
     return os.path.join(base_path, relative_path)
 
 # ===== KIỂM TRA FILE / SHEET / CỘT ===== CHÍNH ====
-# FILE_CONFIG = {
-#     "file1": {
-#         "path": r"\\vdm-fsvr\Cokhi-機工\CONG VIEC CHUNG 2026\22. BAO CAO MMK\DU LIEU\T3\thoi_gian_gia_cong.xlsx",
-#         "sheets": {
-#             "Thời gian gia công": {"min_cols": 12}
-#         }
-#     },
-#     "file2": {
-#         "path": r"\\vdm-fsvr\Cokhi-機工\CONG VIEC CHUNG 2026\22. BAO CAO MMK\DU LIEU\T3\Download1_2.xlsx",
-#         "sheets": {
-#             "Tỉ lệ hoạt động máy": {"min_cols": 3},
-#             "BV,PCS HT trong tháng theo CĐ": {"min_cols": 3},
-#             "Nhận BV,PCS trong tháng": {"min_cols": 5},
-#         }
-#     },
-#     "file3": {
-#         "path": r"\\vdm-fsvr\Cokhi-機工\CONG VIEC CHUNG 2026\22. BAO CAO MMK\DU LIEU\T3\Download2_2026-02-26_2026-03-30.xlsx",
-#         "sheets": {
-#             "Số tiền hoàn thành": {"min_cols": 44},
-#             "Tuân Thủ Kì Hạn": {"min_cols": 18},
-#         }
-#     },
-#     "file4": {
-#         "path": r"\\vdm-fsvr\Cokhi-機工\CONG VIEC CHUNG 2026\22. BAO CAO MMK\DU LIEU\T3\Download3_2026-02-26 07_00_00_2026-03-30 06_59_00.xlsx",
-#         "sheets": {
-#             "BV.PCS Tồn đọng": {"min_cols": 5}
-#         }
-#     },
-#     "file6": {
-#         "path": r"\\vdm-fsvr\Cokhi-機工\CONG VIEC CHUNG 2026\22. BAO CAO MMK\DU LIEU\T3\Thong ke thoi gian CD.xlsx",
-#         "sheets": {
-#             "Thống kê thời gian công đoạn": {"min_cols": 5}
-#         }
-#     },
-#     "file7": {
-#         "path": r"\\vdm-fsvr\Cokhi-機工\CONG VIEC CHUNG 2026\22. BAO CAO MMK\DU LIEU\T3\2026　VDM管理指標　（　月） QLTB-T3.xlsx",
-#         "sheets": {
-#             "指標２(外作)": {"min_cols": 5},
-#             "指標４（生産性）": {"min_cols": 10},
-#         }
-#     },
-#     "file8": {
-#         "path": r"\\vdm-fsvr\Cokhi-機工\CONG VIEC CHUNG 2026\22. BAO CAO MMK\DU LIEU\T3\THỜI GIAN LÀM VIỆC VÀ THỜI GIAN TĂNG CA PHÒNG CƠ KHÍ THÁNG 03.2026.xlsx",
-#         "sheets": {
-#             "GOC": {"min_cols": 8}
-#         }
-#     },
-#     "file9": {
-#         "path": r"\\vdm-fsvr\Cokhi-機工\CONG VIEC CHUNG 2026\14 .BÂT HỢP CÁCH  2026\1.BHC CÔNG ĐOẠN - KIỂM TRA  2026.xlsx",
-#         "sheets": {
-#             "BHCKT26": {"min_cols": 1},
-#             "BHCCD26": {"min_cols": 20},
-#         }
-#     },
-#     "file10": {
-#         "path": r"\\vdm-fsvr\Cokhi-機工\CONG VIEC CHUNG 2026\14 .BÂT HỢP CÁCH  2026\11.KNKH 2026.xlsx",
-#         "sheets": {
-#             "KHIEU NAI BANG VAN BAN - BC MMK": {"min_cols": 14}
-#         }
-#     },
-#     "file11": {
-#             "path": r"D:\Code_cokhi\Bao_Cao_MMK_KPI\T3",
-#             "sheets": {
-#                 "So_tien_HT": {"min_cols": 14},
-#             }
-#         },
-# }
-
-# ===== KIỂM TRA FILE / SHEET / CỘT ===== PHỤ ====
 FILE_CONFIG = {
     "file1": {
-        "path": r"D:\Code_cokhi\Bao_Cao_MMK_KPI\T3_New\thoi_gian_gia_cong.xlsx",
+        "path": r"\\vdm-fsvr\Cokhi-機工\5.TAI LIEU KHAC\1.DU LIEU DOWNLOAD AUTO\1.BAO CAO CUOI THANG\Download7.xlsx",
         "sheets": {
             "Thời gian gia công": {"min_cols": 12}
         }
     },
     "file2": {
-        "path": r"D:\Code_cokhi\Bao_Cao_MMK_KPI\T3_New\Download1_2.xlsx",
+        "path": r"\\vdm-fsvr\Cokhi-機工\5.TAI LIEU KHAC\1.DU LIEU DOWNLOAD AUTO\1.BAO CAO CUOI THANG\Download1.xlsx",
         "sheets": {
             "Tỉ lệ hoạt động máy": {"min_cols": 3},
             "BV,PCS HT trong tháng theo CĐ": {"min_cols": 3},
@@ -105,57 +36,126 @@ FILE_CONFIG = {
         }
     },
     "file3": {
-        "path": r"D:\Code_cokhi\Bao_Cao_MMK_KPI\T3_New\Download2_2026-02-26_2026-03-30.xlsx",
+        "path": r"\\vdm-fsvr\Cokhi-機工\5.TAI LIEU KHAC\1.DU LIEU DOWNLOAD AUTO\1.BAO CAO CUOI THANG\Download2.xlsx",
         "sheets": {
             "Số tiền hoàn thành": {"min_cols": 44},
             "Tuân Thủ Kì Hạn": {"min_cols": 18},
         }
     },
     "file4": {
-        "path": r"D:\Code_cokhi\Bao_Cao_MMK_KPI\T3_New\Download3_2026-02-26 07_00_00_2026-03-30 06_59_00.xlsx",
+        "path": r"\\vdm-fsvr\Cokhi-機工\5.TAI LIEU KHAC\1.DU LIEU DOWNLOAD AUTO\1.BAO CAO CUOI THANG\Download3.xlsx",
         "sheets": {
             "BV.PCS Tồn đọng": {"min_cols": 5}
         }
     },
     "file6": {
-        "path": r"D:\Code_cokhi\Bao_Cao_MMK_KPI\T3\Thong ke thoi gian CD.xlsx",
+        "path": r"\\vdm-fsvr\Cokhi-機工\5.TAI LIEU KHAC\1.DU LIEU DOWNLOAD AUTO\1.BAO CAO CUOI THANG\Thong ke thoi gian CD.xlsx",
         "sheets": {
             "Thống kê thời gian công đoạn": {"min_cols": 5}
         }
     },
     "file7": {
-        "path": r"D:\Code_cokhi\Bao_Cao_MMK_KPI\T3\2026　VDM管理指標　（　月） QLTB-T3.xlsx",
+        "path": r"\\vdm-fsvr\Cokhi-機工\5.TAI LIEU KHAC\1.DU LIEU DOWNLOAD AUTO\1.BAO CAO CUOI THANG\2026　VDM管理指標　（　月） QLTB.xlsx",
         "sheets": {
             "指標２(外作)": {"min_cols": 5},
             "指標４（生産性）": {"min_cols": 10},
         }
     },
     "file8": {
-        "path": r"D:\Code_cokhi\Bao_Cao_MMK_KPI\T3\THỜI GIAN LÀM VIỆC VÀ THỜI GIAN TĂNG CA PHÒNG CƠ KHÍ THÁNG 03.2026.xlsx",
+        "path": r"\\vdm-fsvr\Cokhi-機工\5.TAI LIEU KHAC\1.DU LIEU DOWNLOAD AUTO\1.BAO CAO CUOI THANG\THOI GIAN LAM VIEC VÀ THOI GIAN TANG CA PHONG CO KHI.xlsx",
         "sheets": {
             "GOC": {"min_cols": 8}
         }
     },
     "file9": {
-        "path": r"D:\Code_cokhi\Bao_Cao_MMK_KPI\14 .BAT_HOP_CACH_2026\1.BHC CÔNG ĐOẠN - KIỂM TRA  2026.xlsx",
+        "path": r"\\vdm-fsvr\Cokhi-機工\1.TAI LIEU HANG NAM\2026\14 .BAT HOP CACH 2026\1.BHC CONG DOAN-KIEM TRA 2026.xlsx",
         "sheets": {
             "BHCKT26": {"min_cols": 1},
             "BHCCD26": {"min_cols": 20},
         }
     },
     "file10": {
-        "path": r"D:\Code_cokhi\Bao_Cao_MMK_KPI\14 .BAT_HOP_CACH_2026\KNKH 2026.xlsx",
+        "path": r"\\vdm-fsvr\Cokhi-機工\1.TAI LIEU HANG NAM\2026\14 .BAT HOP CACH 2026\9.KNKH 2026.xlsx",
         "sheets": {
             "KHIEU NAI BANG VAN BAN - BC MMK": {"min_cols": 14}
         }
     },
     "file11": {
-        "path": r"D:\Code_cokhi\Bao_Cao_MMK_KPI\T3_New\SO TIEN HOAN THANH - BC KPMMMK.xlsx",
-        "sheets": {
-            "So_tien_HT": {"min_cols": 14},
+            "path": r"\\vdm-fsvr\Cokhi-機工\1.TAI LIEU HANG NAM\2026\22. BAO CAO MMK\DU LIEU\SO TIEN HOAN THANH-BC KPMMMK.xlsx",
+            "sheets": {
+                "So_tien_HT": {"min_cols": 14},
         }
     },
 }
+
+# ===== KIỂM TRA FILE / SHEET / CỘT ===== PHỤ ====
+# FILE_CONFIG = {
+#     "file1": {
+#         "path": r"D:\Code_cokhi\Bao_Cao_MMK_KPI\T3_New\thoi_gian_gia_cong.xlsx",
+#         "sheets": {
+#             "Thời gian gia công": {"min_cols": 12}
+#         }
+#     },
+#     "file2": {
+#         "path": r"D:\Code_cokhi\Bao_Cao_MMK_KPI\T3_New\Download1_2.xlsx",
+#         "sheets": {
+#             "Tỉ lệ hoạt động máy": {"min_cols": 3},
+#             "BV,PCS HT trong tháng theo CĐ": {"min_cols": 3},
+#             "Nhận BV,PCS trong tháng": {"min_cols": 5},
+#         }
+#     },
+#     "file3": {
+#         "path": r"D:\Code_cokhi\Bao_Cao_MMK_KPI\T3_New\Download2_2026-02-26_2026-03-30.xlsx",
+#         "sheets": {
+#             "Số tiền hoàn thành": {"min_cols": 44},
+#             "Tuân Thủ Kì Hạn": {"min_cols": 18},
+#         }
+#     },
+#     "file4": {
+#         "path": r"D:\Code_cokhi\Bao_Cao_MMK_KPI\T3_New\Download3_2026-02-26 07_00_00_2026-03-30 06_59_00.xlsx",
+#         "sheets": {
+#             "BV.PCS Tồn đọng": {"min_cols": 5}
+#         }
+#     },
+#     "file6": {
+#         "path": r"D:\Code_cokhi\Bao_Cao_MMK_KPI\T3\Thong ke thoi gian CD.xlsx",
+#         "sheets": {
+#             "Thống kê thời gian công đoạn": {"min_cols": 5}
+#         }
+#     },
+#     "file7": {
+#         "path": r"D:\Code_cokhi\Bao_Cao_MMK_KPI\T3\2026　VDM管理指標　（　月） QLTB-T3.xlsx",
+#         "sheets": {
+#             "指標２(外作)": {"min_cols": 5},
+#             "指標４（生産性）": {"min_cols": 10},
+#         }
+#     },
+#     "file8": {
+#         "path": r"D:\Code_cokhi\Bao_Cao_MMK_KPI\T3\THỜI GIAN LÀM VIỆC VÀ THỜI GIAN TĂNG CA PHÒNG CƠ KHÍ THÁNG 03.2026.xlsx",
+#         "sheets": {
+#             "GOC": {"min_cols": 8}
+#         }
+#     },
+#     "file9": {
+#         "path": r"D:\Code_cokhi\Bao_Cao_MMK_KPI\14 .BAT_HOP_CACH_2026\1.BHC CÔNG ĐOẠN - KIỂM TRA  2026.xlsx",
+#         "sheets": {
+#             "BHCKT26": {"min_cols": 1},
+#             "BHCCD26": {"min_cols": 20},
+#         }
+#     },
+#     "file10": {
+#         "path": r"D:\Code_cokhi\Bao_Cao_MMK_KPI\14 .BAT_HOP_CACH_2026\KNKH 2026.xlsx",
+#         "sheets": {
+#             "KHIEU NAI BANG VAN BAN - BC MMK": {"min_cols": 14}
+#         }
+#     },
+#     "file11": {
+#         "path": r"D:\Code_cokhi\Bao_Cao_MMK_KPI\T3_New\SO TIEN HOAN THANH - BC KPMMMK.xlsx",
+#         "sheets": {
+#             "So_tien_HT": {"min_cols": 14},
+#         }
+#     },
+# }
 # ==================================================
 # SYSTEM CONFIG
 # ==================================================
