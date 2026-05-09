@@ -48,12 +48,12 @@ FILE_CONFIG = {
             "BV.PCS Tồn đọng": {"min_cols": 5}
         }
     },
-    "file6": {
-        "path": r"\\vdm-fsvr\Cokhi-機工\5.TAI LIEU KHAC\1.DU LIEU DOWNLOAD AUTO\1.BAO CAO CUOI THANG\Thong ke thoi gian CD.xlsx",
-        "sheets": {
-            "Thống kê thời gian công đoạn": {"min_cols": 5}
-        }
-    },
+    # "file6": {
+    #     "path": r"\\vdm-fsvr\Cokhi-機工\5.TAI LIEU KHAC\1.DU LIEU DOWNLOAD AUTO\1.BAO CAO CUOI THANG\Thong ke thoi gian CD.xlsx",
+    #     "sheets": {
+    #         "Thống kê thời gian công đoạn": {"min_cols": 5}
+    #     }
+    # },
     "file7": {
         "path": r"\\vdm-fsvr\Cokhi-機工\5.TAI LIEU KHAC\1.DU LIEU DOWNLOAD AUTO\1.BAO CAO CUOI THANG\2026　VDM管理指標　（　月） QLTB.xlsx",
         "sheets": {
@@ -84,6 +84,12 @@ FILE_CONFIG = {
             "path": r"\\vdm-fsvr\Cokhi-機工\1.TAI LIEU HANG NAM\2026\22. BAO CAO MMK\DU LIEU\SO TIEN HOAN THANH-BC KPMMMK.xlsx",
             "sheets": {
                 "So_tien_HT": {"min_cols": 14},
+        }
+    },
+    "file12": {
+        "path": r"\\vdm-fsvr\Cokhi-機工\1.TAI LIEU HANG NAM\2026\22. BAO CAO MMK\DU LIEU\SO CONG PHE PHAM-BC KPMMMK.xlsx",
+        "sheets": {
+            "SO CONG PHE PHAM": {"min_cols": 14},
         }
     },
 }
@@ -117,12 +123,12 @@ FILE_CONFIG = {
 #             "BV.PCS Tồn đọng": {"min_cols": 5}
 #         }
 #     },
-#     "file6": {
-#         "path": r"D:\Code_cokhi\Bao_Cao_MMK_KPI\T3\Thong ke thoi gian CD.xlsx",
-#         "sheets": {
-#             "Thống kê thời gian công đoạn": {"min_cols": 5}
-#         }
-#     },
+#     # "file6": {
+#     #     "path": r"D:\Code_cokhi\Bao_Cao_MMK_KPI\T3\Thong ke thoi gian CD.xlsx",
+#     #     "sheets": {
+#     #         "Thống kê thời gian công đoạn": {"min_cols": 5}
+#     #     }
+#     # },
 #     "file7": {
 #         "path": r"D:\Code_cokhi\Bao_Cao_MMK_KPI\T3\2026　VDM管理指標　（　月） QLTB-T3.xlsx",
 #         "sheets": {
@@ -155,6 +161,12 @@ FILE_CONFIG = {
 #             "So_tien_HT": {"min_cols": 14},
 #         }
 #     },
+#     "file12": {
+#         "path": r"D:\Code_cokhi\Bao_Cao_MMK_KPI\T3_New\SO CONG PHE PHAM-BC KPMMMK.xlsx",
+#         "sheets": {
+#             "SO CONG PHE PHAM": {"min_cols": 14},
+#         }
+#     },
 # }
 # ==================================================
 # SYSTEM CONFIG
@@ -168,7 +180,9 @@ else:
 
 TEMPLATE_PATH = resource_path("2026 VDM KPI.xlsx")
 SNO_FIXED_PATH = resource_path("SNO_LIST.xlsx")
-OUTPUT_DIR = os.path.join(BASE_DIR, "KET_QUA")
+# OUTPUT_DIR = os.path.join(BASE_DIR, "KET_QUA")
+OUTPUT_DIR = r"\\vdm-fsvr\Cokhi-機工\1.TAI LIEU HANG NAM\2026\22. BAO CAO MMK\BAO CAO TINH SAN XUAT"
+# OUTPUT_DIR = r"D:\Code_cokhi\Bao_Cao_MMK_KPI"
 
 
 # ===== HẾT =====
@@ -1203,7 +1217,6 @@ def read_money_vnd_from_file11(
     money_vnd = (
         str(raw)
         .replace(",", "")
-        .replace(".", "")
         .replace(" ", "")
     )
 
@@ -1224,6 +1237,65 @@ def read_money_vnd_from_file11(
         )
 
     return money_vnd, money_usd
+
+def read_phe_pham_from_file12(
+    file_path: str,
+    sheet_name: str,
+    month: int,
+    debug: bool = True
+):
+    import unicodedata, re
+    import pandas as pd
+
+    def norm(s):
+        s = unicodedata.normalize("NFKD", str(s))
+        s = "".join(c for c in s if not unicodedata.combining(c))
+        s = s.lower()
+        s = re.sub(r"[^a-z0-9]", "", s)
+        return s
+
+    df = pd.read_excel(file_path, sheet_name=sheet_name, header=None)
+    key_target = norm("Số công phế phẩm")
+    target_row = None
+
+    # ✅ Tìm hàng: Ưu tiên hàng có chứa từ khóa và CÓ DỮ LIỆU SỐ ở cột tháng
+    col_month = 2 + (month - 1) # T1=C(2), T4=F(5)
+
+    for r in range(df.shape[0]):
+        row_values = df.iloc[r].values
+        row_text = "".join(norm(v) for v in row_values if isinstance(v, str))
+        
+        if key_target in row_text:
+            # Kiểm tra xem ô ở cột tháng có phải là số không (tránh lấy nhầm dòng tiêu đề)
+            potential_val = row_values[col_month]
+            if pd.notna(potential_val) and not isinstance(potential_val, str):
+                target_row = r
+                break
+            # Nếu là string nhưng có thể chuyển thành số thì vẫn nhận
+            elif isinstance(potential_val, str) and re.search(r'\d', potential_val):
+                target_row = r
+                break
+
+    if target_row is None:
+        raise Exception("❌ Không tìm thấy dòng 'Số công phế phẩm' trong FILE 12")
+
+    raw = df.iat[target_row, col_month]
+    
+    # Chuyển đổi tọa độ sang tên cột Excel để debug (ví dụ: 5 -> F)
+    col_name = chr(65 + col_month) if col_month < 26 else str(col_month)
+
+    # ✅ Xử lý số liệu an toàn: Giữ nguyên nếu là số, chỉ xử lý chuỗi nếu cần
+    if isinstance(raw, (int, float)):
+        val = raw
+    else:
+        val = str(raw).replace(",", "").replace(" ", "")
+        val = pd.to_numeric(val, errors="coerce")
+    val = 0.0 if pd.isna(val) else float(val)
+
+    if debug:
+        print(f"✅ FILE 12 – Đã đọc ô {col_name}{target_row + 1}: Giá trị = {val}")
+
+    return val
 
 
 def run_kpi():
@@ -1253,7 +1325,7 @@ def run_kpi():
         prev_month = 12
         prev_year -= 1
 
-    prev_file = os.path.join(OUTPUT_DIR, f"KPI_{prev_year}_{prev_month:02d}.xlsx")
+    prev_file = os.path.join(OUTPUT_DIR, f"{prev_year} VDM KPI ({prev_month:02d}).xlsx")
 
     if not os.path.exists(current_file):
         if os.path.exists(prev_file):
@@ -1918,79 +1990,79 @@ def run_kpi():
     ws_kpi1[f"{col_kpi1}39"] = ratio_bv_on_time
     ws_kpi1[f"{col_kpi1}39"].number_format = "0%"
 
-    # ==================================================
-    # FILE 6 – THỐNG KÊ THỜI GIAN CÔNG ĐOẠN
-    # ==================================================
-    path_file6 = FILE_CONFIG["file6"]["path"]
+    # # ==================================================
+    # # FILE 6 – THỐNG KÊ THỜI GIAN CÔNG ĐOẠN
+    # # ==================================================
+    # path_file6 = FILE_CONFIG["file6"]["path"]
 
-    df_cd_time = pd.read_excel(
-        path_file6,
-        sheet_name="Thống kê thời gian công đoạn",
-        header=0
-    )
+    # df_cd_time = pd.read_excel(
+    #     path_file6,
+    #     sheet_name="Thống kê thời gian công đoạn",
+    #     header=0
+    # )
 
-    cd_key = df_cd_time.iloc[:, 1].astype(str).str.strip()
-    cd_value = pd.to_numeric(df_cd_time.iloc[:, 4], errors="coerce")
-    cd_time_map = dict(zip(cd_key, cd_value))
+    # cd_key = df_cd_time.iloc[:, 1].astype(str).str.strip()
+    # cd_value = pd.to_numeric(df_cd_time.iloc[:, 4], errors="coerce")
+    # cd_time_map = dict(zip(cd_key, cd_value))
 
-    ws_kpi3 = wb["指標3（工程毎負荷時間)"]
-    col_kpi3 = excel_col(6 + month - 1)
+    # ws_kpi3 = wb["指標3（工程毎負荷時間)"]
+    # col_kpi3 = excel_col(6 + month - 1)
 
-    for row in range(5, ws_kpi3.max_row + 1):
-        cd = ws_kpi3[f"C{row}"].value
-        if cd and cd in cd_time_map:
-            ws_kpi3[f"{col_kpi3}{row}"] = cd_time_map[cd]
-            ws_kpi3[f"{col_kpi3}{row}"].number_format = "#,##0"
+    # for row in range(5, ws_kpi3.max_row + 1):
+    #     cd = ws_kpi3[f"C{row}"].value
+    #     if cd and cd in cd_time_map:
+    #         ws_kpi3[f"{col_kpi3}{row}"] = cd_time_map[cd]
+    #         ws_kpi3[f"{col_kpi3}{row}"].number_format = "#,##0"
 
-    print("✅ FILE 6: Ghi thời gian công đoạn xong")
+    # print("✅ FILE 6: Ghi thời gian công đoạn xong")
 
-    # ==================================================
-    # FILE 7 – 指標２(外作)
-    # ==================================================
-    path_file7 = FILE_CONFIG["file7"]["path"]
+    # # ==================================================
+    # # FILE 7 – 指標２(外作)
+    # # ==================================================
+    # path_file7 = FILE_CONFIG["file7"]["path"]
 
-    df_out = pd.read_excel(
-        path_file7,
-        sheet_name="指標２(外作)",
-        header=8
-    )
+    # df_out = pd.read_excel(
+    #     path_file7,
+    #     sheet_name="指標２(外作)",
+    #     header=8
+    # )
 
-    df_out.iloc[:, 0] = df_out.iloc[:, 0].ffill()
-    df_out.iloc[:, 1] = df_out.iloc[:, 1].ffill()
+    # df_out.iloc[:, 0] = df_out.iloc[:, 0].ffill()
+    # df_out.iloc[:, 1] = df_out.iloc[:, 1].ffill()
 
-    month_label = f"{month}月"
-    target_col_idx = next(i for i, c in enumerate(df_out.columns) if month_label in str(c))
+    # month_label = f"{month}月"
+    # target_col_idx = next(i for i, c in enumerate(df_out.columns) if month_label in str(c))
 
-    col_a = df_out.iloc[:, 0].astype(str).str.strip()
-    col_b = df_out.iloc[:, 1].astype(str).str.strip()
-    col_c = df_out.iloc[:, 2].astype(str).str.strip()
-    col_val = pd.to_numeric(df_out.iloc[:, target_col_idx], errors="coerce")
+    # col_a = df_out.iloc[:, 0].astype(str).str.strip()
+    # col_b = df_out.iloc[:, 1].astype(str).str.strip()
+    # col_c = df_out.iloc[:, 2].astype(str).str.strip()
+    # col_val = pd.to_numeric(df_out.iloc[:, target_col_idx], errors="coerce")
 
-    out_map = {}
-    for i in range(len(df_out)):
-        key = (col_a.iloc[i], col_b.iloc[i])
-        if key not in out_map:
-            out_map[key] = {"bv": 0, "ng": 0}
-        if col_c.iloc[i] == "図面総数":
-            out_map[key]["bv"] = col_val.iloc[i]
-        elif col_c.iloc[i] == "不良件数":
-            out_map[key]["ng"] = col_val.iloc[i]
+    # out_map = {}
+    # for i in range(len(df_out)):
+    #     key = (col_a.iloc[i], col_b.iloc[i])
+    #     if key not in out_map:
+    #         out_map[key] = {"bv": 0, "ng": 0}
+    #     if col_c.iloc[i] == "図面総数":
+    #         out_map[key]["bv"] = col_val.iloc[i]
+    #     elif col_c.iloc[i] == "不良件数":
+    #         out_map[key]["ng"] = col_val.iloc[i]
 
-    ws_kpi2_out = wb["指標２(外作)"]
-    col_kpi2_out = excel_col(4 + month - 1)
+    # ws_kpi2_out = wb["指標２(外作)"]
+    # col_kpi2_out = excel_col(4 + month - 1)
 
-    row = 12
-    while row <= ws_kpi2_out.max_row:
-        key = (
-            str(ws_kpi2_out[f"A{row}"].value).strip(),
-            str(ws_kpi2_out[f"B{row}"].value).strip()
-        )
-        if key in out_map:
-            ws_kpi2_out[f"{col_kpi2_out}{row}"] = out_map[key]["bv"]
-            ws_kpi2_out[f"{col_kpi2_out}{row+1}"] = out_map[key]["ng"]
-        row += 3
+    # row = 12
+    # while row <= ws_kpi2_out.max_row:
+    #     key = (
+    #         str(ws_kpi2_out[f"A{row}"].value).strip(),
+    #         str(ws_kpi2_out[f"B{row}"].value).strip()
+    #     )
+    #     if key in out_map:
+    #         ws_kpi2_out[f"{col_kpi2_out}{row}"] = out_map[key]["bv"]
+    #         ws_kpi2_out[f"{col_kpi2_out}{row+1}"] = out_map[key]["ng"]
+    #     row += 3
 
-    print("✅ FILE 7: 外作 xong")
+    # print("✅ FILE 7: 外作 xong")
     
     # ==================================================
     # FILE 8 – GIỜ NHÂN SỰ (GOC)
@@ -2279,6 +2351,25 @@ def run_kpi():
         f"   RATE     = {EXCHANGE_RATE}"
     )
 
+    # ==================================================
+    # FILE 12 – SỐ CÔNG PHẾ PHẨM (BÁO CÁO KPI MMK)
+    # ==================================================
+    path_file12 = FILE_CONFIG["file12"]["path"]
+    sheet_file12 = "SO CONG PHE PHAM"
+    ws_kpi4 = wb["指標４（生産性) "] # Đảm bảo ws_kpi4 trỏ đúng sheet
+
+    val_phe_pham = read_phe_pham_from_file12(
+        file_path=path_file12,
+        sheet_name=sheet_file12,
+        month=month,
+        debug=True # Changed to True for debugging
+    )
+
+    # Ghi vào hàng 25 của sheet 指標４（生産性)
+    ws_kpi4[f"{col_kpi4}25"] = val_phe_pham
+    ws_kpi4[f"{col_kpi4}25"].number_format = "#,##0.00"
+
+    print(f"✅ 指標４（生産性) | Row 25 | Cột {col_kpi4} | Giá trị = {val_phe_pham}")
 
 
     wb.save(current_file)

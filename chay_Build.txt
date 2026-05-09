@@ -4,3 +4,5 @@ py -m PyInstaller ^
   --add-data "2026 VDM KPI.xlsx;." ^
   --add-data "SNO_LIST.xlsx;." ^
   Chi_So_KPI_13042026.py
+ hoăc
+ py -m PyInstaller --onefile --clean --add-data "2026 VDM KPI.xlsx;." --add-data "SNO_LIST.xlsx;." Chi_So_KPI_13042026.py

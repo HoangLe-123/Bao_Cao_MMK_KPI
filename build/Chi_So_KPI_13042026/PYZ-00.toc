@@ -1,4 +1,4 @@
-('D:\\Code_cokhi\\Du_Lieu_TD\\Chi_So_KPI_MMK\\13042026\\build\\Chi_So_KPI_13042026\\PYZ-00.pyz',
+('D:\\Code_cokhi\\Bao_Cao_MMK_KPI\\build\\Chi_So_KPI_13042026\\PYZ-00.pyz',
  [('PIL',
    'C:\\Users\\VDM\\AppData\\Local\\Python\\pythoncore-3.14-64\\Lib\\site-packages\\PIL\\__init__.py',
    'PYMODULE'),
