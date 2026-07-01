@@ -10,8 +10,8 @@ import unicodedata
 def resource_path(relative_path):
     """
     Lấy đường dẫn file:
-    - Khi chạy .py → lấy thư mục code
-    - Khi chạy .exe → lấy thư mục _MEIPASS
+    - Khi chạy .py -> lấy thư mục code
+    - Khi chạy .exe -> lấy thư mục _MEIPASS
     """
     try:
         base_path = sys._MEIPASS  # PyInstaller
@@ -215,9 +215,9 @@ def normalize_machine_code(value):
         return ""
 
     # =========================
-    # ✅ CHUẨN UNICODE (CỰC KỲ QUAN TRỌNG)
-    # EN0１ → EN01
-    # ＭＣ０２ → MC02
+    # CHUẨN UNICODE (CỰC KỲ QUAN TRỌNG)
+    # EN0１ -> EN01
+    # ＭＣ０２ -> MC02
     # =========================
     s = unicodedata.normalize("NFKC", str(value))
 
@@ -307,7 +307,7 @@ def normalize_cd_from_template(value):
 def normalize_msyc(value: str) -> str:
     """
     Bỏ toàn bộ ký tự đặc biệt trong MSYC
-    VD: L611-01 → L61101
+    VD: L611-01 -> L61101
     """
     if not isinstance(value, str):
         return ""
@@ -357,9 +357,9 @@ def get_kpi_month_by_monthly_run_day(now=None):
     """
     Mỗi tháng có ngày chốt khác nhau.
     Nếu hôm nay >= ngày chốt của tháng hiện tại:
-        → chạy KPI tháng trước
+        -> chạy KPI tháng trước
     Nếu chưa tới:
-        → chưa chạy
+        -> chưa chạy
 
     Trả về (month, year) hoặc None
     """
@@ -392,8 +392,8 @@ def get_report_month_year(now=None):
     """
     Xác định tháng/năm báo cáo tự động
     Ví dụ:
-        Today = 2026-04-13  → Report = 03/2026
-        Today = 2026-01-05  → Report = 12/2025
+        Today = 2026-04-13  -> Report = 03/2026
+        Today = 2026-01-05  -> Report = 12/2025
     """
     if now is None:
         now = datetime.now()
@@ -424,757 +424,7 @@ def get_merged_cell_value(ws, row, col):
             return str(tl.value).strip() if tl.value else None
     return None   
             
-
-        #  # FILE 9 - BHC (BHCKT & BHCCD)
-        #  # --- BHCKT ---
-        # df_bhckt = pd.read_excel(
-        #     self.file9_path.get(),
-        #     sheet_name="BHCKT26",
-        #     header=0
-        # )
-        # bhckt_month_col = pd.to_numeric(df_bhckt.iloc[:, 0], errors="coerce")
-        # bhckt_count = (bhckt_month_col == month).sum()
-        # # --- BHCCD ---
-        # df_bhccd = pd.read_excel(
-        #     self.file9_path.get(),
-        #     sheet_name="BHCCD26",
-        #     header=0
-        # )
-        #     bhccd_month_col = pd.to_numeric(df_bhccd.iloc[:, 0], errors="coerce")
-        #     bhccd_count = (bhccd_month_col == month).sum()
-        #     # =============================
-        #     # ĐẾM BHCCD THEO CÔNG ĐOẠN (THEO THÁNG)
-        #     # =============================
-        #     bhccd_cd_col = df_bhccd.iloc[:, 19].astype(str).str.strip()  # cột T
-        #     df_bhccd_m = df_bhccd[bhccd_month_col == month]
-        #     bhccd_count_by_cd = (
-        #         bhccd_cd_col[bhccd_month_col == month]
-        #         .value_counts()
-        #         .to_dict()
-        #     )
-        #     # Ví dụ: {'GS': 2, 'GC': 1}
-        #     # =============================
-        #     # MAP THÁNG → CỘT
-        #     # =============================
-        #     start_col_index = 12  # L = tháng 1
-        #     target_col_letter = self.get_excel_column_letter(start_col_index + month - 1)
-        #     self.log(f"Ghi dữ liệu tháng {month} vào cột {target_col_letter}")
-        #     # =============================
-        #     # MAP THÁNG → CỘT (指標２(内作))
-        #     # =============================
-        #     start_col_index_kpi2 = 3  # C = tháng 1
-        #     target_col_kpi2 = self.get_excel_column_letter(start_col_index_kpi2 + month - 1)
-        #     self.log(f"指標２(内作): ghi tháng {month} vào cột {target_col_kpi2}")
-        #     # =============================
-        #     # MAP THÁNG → CỘT (指標1)
-        #     # =============================
-        #     start_col_index_kpi1 = 2  # B = tháng 1
-        #     target_col_kpi1 = self.get_excel_column_letter(start_col_index_kpi1 + month - 1)
-        #     self.log(f"指標1: ghi tháng {month} vào cột {target_col_kpi1}")
-        #     # =============================
-        #     # MAP THÁNG → CỘT (指標４)
-        #     # Tháng 1 = cột I
-        #     # =============================
-        #     start_col_index_kpi4 = 9  # I
-        #     target_col_kpi4 = self.get_excel_column_letter(start_col_index_kpi4 + month - 1)
-        #     # Tháng 1 bắt đầu từ cột F (index = 6)
-        #     start_col_index_kpi3 = 6  # F
-        #     target_col_kpi3 = self.get_excel_column_letter(start_col_index_kpi3 + month - 1)
-        #     self.log(f"指標3: ghi tháng {month} vào cột {target_col_kpi3}")
-        #     # =============================
-        #     # MAP THÁNG → CỘT (指標２(外作))
-        #     # Tháng 1 = cột D
-        #     # =============================
-        #     start_col_index_kpi2_out = 4  # D
-        #     target_col_kpi2_out = self.get_excel_column_letter(start_col_index_kpi2_out + month - 1)
-        #     self.log(f"指標２(外作): ghi tháng {month} vào cột {target_col_kpi2_out}")
-        #     # =============================
-        #     # MAP THÁNG → CỘT (指標４（生産性）)
-        #     # Tháng 1 = cột G
-        #     # =============================
-        #     start_col_index_kpi4_extra = 7  # G
-        #     target_col_kpi4_extra = self.get_excel_column_letter(start_col_index_kpi4_extra + month - 1)
-        #     self.log(f"指標４（生産性）(extra): ghi tháng {month} vào cột {target_col_kpi4_extra}")
-        #     # =============================
-        #     # FILE HIỆN TẠI / THÁNG TRƯỚC
-        #     # =============================
-        #     current_file = os.path.join(OUTPUT_DIR, f"KPI_{year}_{month:02d}.xlsx")
-        #     prev_month = month - 1
-        #     prev_year = int(year)
-        #     if prev_month == 0:
-        #         prev_month = 12
-        #         prev_year -= 1
-        #     prev_file = os.path.join(OUTPUT_DIR, f"KPI_{prev_year}_{prev_month:02d}.xlsx")
-
-        #     # =============================
-        #     # LUÔN ĐẢM BẢO KẾ THỪA
-        #     # =============================
-        #     if not os.path.exists(current_file):
-        #         if os.path.exists(prev_file):
-        #             copyfile(prev_file, current_file)
-        #             self.log(f"Kế thừa dữ liệu từ {os.path.basename(prev_file)}")
-        #         else:
-        #             copyfile(TEMPLATE_PATH, current_file)
-        #             self.log("Tạo file mới từ template")
-        #     else:
-        #         self.log("File tháng đã tồn tại → chỉ cập nhật thêm dữ liệu")   
-        #     # =============================
-        #     # ĐỌC DOWN1
-        #     # =============================
-        #     df = pd.read_excel(
-        #         self.file2_path.get(),
-        #         sheet_name="Tỉ lệ hoạt động máy",
-        #         header=0
-        #     )
-        #     machine_col = df.iloc[:, 1]   # Cột B
-        #     time_col = pd.to_numeric(df.iloc[:, 2], errors="coerce")  # Cột C
-        #     machine_time = (
-        #         pd.DataFrame({
-        #             "machine": machine_col.map(normalize_machine_code),
-        #             "time": time_col
-        #         })
-        #         .groupby("machine")["time"]
-        #         .sum()
-        #         .to_dict()
-        #     )
-        #     self.log(f"Tổng hợp {len(machine_time)} máy từ Down1")
-        #     # =============================
-        #     # ĐỌC DOWN1 - BV,PCS HT trong tháng theo CĐ (CHỈ CỘT A & C)
-        #     # =============================
-        #     df_bv = pd.read_excel(
-        #         self.file2_path.get(),
-        #         sheet_name="BV,PCS HT trong tháng theo CĐ",
-        #         header=0
-        #     )
-        #     # Cột A = Công đoạn
-        #     # Cột C = Số bản vẽ
-        #     cd_col = df_bv.iloc[:, 0].map(normalize_cd_from_down1)   # A
-        #     bv_col = pd.to_numeric(df_bv.iloc[:, 2], errors="coerce")  # C
-        #     # Tổng số bản vẽ theo CĐ
-        #     bv_sum_by_cd = (
-        #         pd.DataFrame({
-        #             "CD": cd_col.astype(str).str.strip(),
-        #             "BV": bv_col
-        #         })
-        #         .groupby("CD")["BV"]
-        #         .sum()
-        #         .to_dict()
-        #     )
-        #     self.log(f"指標２(内作): tổng hợp {len(bv_sum_by_cd)} công đoạn")
-        #     # =============================
-        #     # ĐỌC DOWN1 - Nhận BV,PCS trong tháng 
-        #     # =============================
-        #     df_nhan = pd.read_excel(
-        #         self.file2_path.get(),
-        #         sheet_name="Nhận BV,PCS trong tháng",
-        #         header=0
-        #     )
-        #     # Cột A = STT (chỉ dùng để đếm dòng)
-        #     # Cột E = Số lượng
-        #     col_stt = df_nhan.iloc[:, 0]
-        #     col_qty = pd.to_numeric(df_nhan.iloc[:, 4], errors="coerce")
-        #     # ✅ SỐ DÒNG (bỏ header, bỏ dòng trống)
-        #     total_rows = col_stt.notna().sum()
-        #     # ✅ TỔNG SỐ LƯỢNG
-        #     total_quantity = col_qty.sum()
-        #     self.log(
-        #         f"指標1: Số dòng = {total_rows}, Tổng số lượng = {total_quantity}"
-        #     )
-        #     # =============================
-        #     # ĐỌC DOWN3 - BV.PCS Tồn đọng
-        #     # =============================
-        #     df_ton = pd.read_excel(
-        #         self.file4_path.get(),
-        #         sheet_name="BV.PCS Tồn đọng",
-        #         header=0
-        #     )
-        #     # Cột A = STT (đếm dòng)
-        #     # Cột E = Số lượng tồn
-        #     col_stt_ton = df_ton.iloc[:, 0]
-        #     col_qty_ton = pd.to_numeric(df_ton.iloc[:, 4], errors="coerce")
-        #     # ✅ SỐ DÒNG (bỏ header, bỏ dòng trống)
-        #     total_rows_ton = col_stt_ton.notna().sum()
-        #     # ✅ TỔNG SỐ LƯỢNG
-        #     total_qty_ton = col_qty_ton.sum()
-        #     self.log(
-        #         f"指標1 (Tồn đọng): Số dòng = {total_rows_ton}, Tổng số lượng = {total_qty_ton}"
-        #     )
-        #     # =============================
-        #     # ĐỌC DOWN2 - Số tiền hoàn thành (CHỈ 1 LẦN)
-        #     # =============================
-        #     df_ht = pd.read_excel(
-        #         self.file3_path.get(),
-        #         sheet_name="Số tiền hoàn thành",
-        #         header=0
-        #     )
-        #     # --- CỘT DỮ LIỆU ---
-        #     col_key = df_ht.iloc[:, 0].astype(str).str.strip()   # KEY (cột A)
-        #     col_c   = df_ht.iloc[:, 2].astype(str).str.strip()   # Cột C
-        #     col_qty = pd.to_numeric(df_ht.iloc[:, 5], errors="coerce")   # Cột F
-        #     col_aq  = pd.to_numeric(df_ht.iloc[:, 42], errors="coerce")  # Cột AQ (tiền)
-        #     col_ar  = df_ht.iloc[:, 43].astype(str).str.strip()          # Cột AR
-        #     # --- ĐIỀU KIỆN LỌC ---
-        #     mask_keep = col_ar == "Bản vẽ hoàn thành"
-        #     mask_exclude = (
-        #         col_key.str.startswith(("412", "L412", "R412")) &
-        #         col_c.str.startswith("C")
-        #     )
-        #     df_valid = df_ht[mask_keep & ~mask_exclude]
-        #     df_st = df_ht[mask_keep & ~mask_exclude].copy()
-        #     # ==================================================
-        #     # ✅ KHUÔN – TÍNH TRỰC TIẾP TỪ TUÂN THỦ KÌ HẠN
-        #     # ==================================================
-            
-        #                 # =============================
-        #     # ĐỌC TUÂN THỦ KÌ HẠN
-        #     # =============================
-        #     df_ttkh = pd.read_excel(
-        #         self.file3_path.get(),
-        #         sheet_name="Tuân Thủ Kì Hạn",
-        #         header=0
-        #     )
-            
-        #     # --- TÍNH TOÁN TỪ Down2 ---
-        #     total_rows_ht  = df_valid.iloc[:, 0].notna().sum()
-        #     total_qty_ht   = col_qty[mask_keep & ~mask_exclude].sum()
-        #     total_money_ht = col_aq[mask_keep & ~mask_exclude].sum()
-        #     total_money_usd = total_money_ht / rate
-        #     self.log(
-        #         f"HT: Số dòng={total_rows_ht}, "
-        #         f"Số lượng={total_qty_ht}, "
-        #         f"Tổng tiền={total_money_ht}"
-        #     )
-        #     # =============================
-        #     # ĐỌC FILE 6 - Thống kê thời gian công đoạn
-        #     # =============================
-        #     df_cd_time = pd.read_excel(
-        #         self.file6_path.get(),
-        #         sheet_name="Thống kê thời gian công đoạn",
-        #         header=0
-        #     )
-        #     # Cột B = mã công đoạn
-        #     # Cột E = giá trị cần ghi
-        #     cd_key = df_cd_time.iloc[:, 1].astype(str).str.strip()
-        #     cd_value = pd.to_numeric(df_cd_time.iloc[:, 4], errors="coerce")
-        #     cd_time_map = dict(zip(cd_key, cd_value))
-        #     self.log(f"指標3: đọc {len(cd_time_map)} công đoạn từ file thống kê")
-        #     # =============================
-        #     # ĐỌC FILE 7 - 指標２(外作)
-        #     # =============================
-        #     df_out = pd.read_excel(
-        #         self.file7_path.get(),
-        #         sheet_name="指標２(外作)",
-        #         header=8
-        #     )
-        #     df_out.columns = df_out.columns.astype(str).str.strip()
-        #     # ✅ FIX MERGE CELL
-        #     df_out.iloc[:, 0] = df_out.iloc[:, 0].ffill()
-        #     df_out.iloc[:, 1] = df_out.iloc[:, 1].ffill()
-        #     # =============================
-        #     # 🔥 TÌM CỘT THEO THÁNG
-        #     # =============================
-        #     month_label = f"{month}月"   # ví dụ : "3月"
-        #     target_col_idx = None
-        #     for i, col in enumerate(df_out.columns):
-        #         if month_label in str(col):
-        #             target_col_idx = i
-        #             break
-        #     if target_col_idx is None:
-        #         raise Exception(f"Không tìm thấy cột tháng {month_label} trong file 7")
-        #     self.log(f"File 7: lấy dữ liệu cột {month_label}")
-        #     # =============================
-        #     # ĐỌC FILE 7 - 指標４（生産性）
-        #     # =============================
-        #     df_kpi4_file7 = pd.read_excel(
-        #         self.file7_path.get(),
-        #         sheet_name="指標４（生産性）",
-        #         header=None
-        #     )
-        #     # Lấy giá trị
-        #     col_index_file7 = 6 + (month - 1)  # G = 6
-        #     val_row28 = pd.to_numeric(df_kpi4_file7.iloc[27, col_index_file7], errors="coerce")
-        #     val_row29 = pd.to_numeric(df_kpi4_file7.iloc[28, col_index_file7], errors="coerce")
-        #     val_row30 = pd.to_numeric(df_kpi4_file7.iloc[29, col_index_file7], errors="coerce")
-        #     self.log(f"File7 KPI4: Row29={val_row29}, Row30={val_row30}")
-        #     # =============================
-        #     # LẤY DỮ LIỆU
-        #     # =============================
-        #     col_a = df_out.iloc[:, 0].astype(str).str.strip()
-        #     col_b = df_out.iloc[:, 1].astype(str).str.strip()
-        #     col_c = df_out.iloc[:, 2].astype(str).str.strip()
-        #     col_val = pd.to_numeric(df_out.iloc[:, target_col_idx], errors="coerce")
-        #     # =============================
-        #     # BUILD MAP
-        #     # =============================
-        #     out_map = {}
-        #     for i in range(len(df_out)):
-        #         key = (col_a.iloc[i], col_b.iloc[i])
-        #         label = col_c.iloc[i]
-        #         val = col_val.iloc[i]
-        #         if key not in out_map:
-        #             out_map[key] = {"bv": 0, "ng": 0}
-        #         if label == "図面総数":
-        #             out_map[key]["bv"] = val
-        #         elif label == "不良件数":
-        #             out_map[key]["ng"] = val
-        #     out_map = {k: (v["bv"], v["ng"]) for k, v in out_map.items()}
-        #     self.log(f"指標２(外作): xử lý {len(out_map)} nhóm")
-        #     # =============================
-        #     # LẤY KEY (A, B) TỪ SỐ TIỀN HOÀN THÀNH (ĐÃ LỌC)
-        #     # =============================
-        #     valid_keys = set(
-        #         zip(
-        #             df_valid.iloc[:, 0].astype(str).str.strip(),  # Cột A
-        #             df_valid.iloc[:, 1].astype(str).str.strip()   # Cột B
-        #         )
-        #     )
-        #     tt_a = df_ttkh.iloc[:, 0].astype(str).str.strip()   # Cột A
-        #     tt_b = df_ttkh.iloc[:, 1].astype(str).str.strip()   # Cột B
-        #     col_o = pd.to_numeric(df_ttkh.iloc[:, 14], errors="coerce")  # Cột O
-        #     col_r = pd.to_numeric(df_ttkh.iloc[:, 17], errors="coerce")  # Cột R
-        #     # Match theo (A, B)
-        #     mask_match = pd.Series(
-        #         [(a, b) in valid_keys for a, b in zip(tt_a, tt_b)],
-        #         index=df_ttkh.index
-        #     )
-        #     # =============================
-        #     # LỌC THÊM: CỘT A BẮT ĐẦU = "L213"
-        #     # (TRÊN DỮ LIỆU ĐÃ MATCH)
-        #     # =============================
-        #     mask_L213 = (
-        #         mask_match &
-        #         df_ttkh.iloc[:, 0].astype(str).str.startswith("L213")
-        #     )
-        #     tt_key = df_ttkh.iloc[:, 0].astype(str).str.strip()      # KEY (cột A)
-        #     time_j = pd.to_numeric(df_ttkh.iloc[:, 9], errors="coerce")   # Cột J
-        #     time_k = pd.to_numeric(df_ttkh.iloc[:,10], errors="coerce")  # Cột K
-        #     total_time_j = time_j[mask_match].sum()/60
-        #     total_time_k = time_k[mask_match].sum()/60
-        #     self.log(
-        #         f"Tuân thủ: Tổng J={total_time_j}, Tổng K={total_time_k}"
-        #     )
-        #     # =============================
-        #     # TÍNH SỐ BẢN VẼ TRỄ HẸN (TUÂN THỦ KÌ HẠN)
-        #     # Điều kiện: BV đã hoàn thành + (O - Q) > 0
-        #     # =============================
-        #     col_o = pd.to_numeric(df_ttkh.iloc[:, 14], errors="coerce")  # Cột O
-        #     col_q = pd.to_numeric(df_ttkh.iloc[:, 16], errors="coerce")  # Cột Q
-        #     # Trễ hẹn nếu (O - Q) > 0
-        #     mask_late = (col_o - col_q) > 0
-        #     # ✅ SỐ BV TRỄ HẸN (CHỈ TRONG TẬP ĐÃ HOÀN THÀNH)
-        #     late_bv_count = (mask_match & mask_late).sum()
-        #     self.log(
-        #         f"Trễ hẹn: BV hoàn thành={total_rows_ht}, BV trễ hẹn={late_bv_count}"
-        #     )
-        #     # =============================
-        #     # FILE 8 - GIỜ NHÂN SỰ (GOC)
-        #     # CHỈ TÍNH NV CÒN LÀM VIỆC
-        #     # =============================
-        #     fixed_leave_codes = {
-        #         "10064", "10135", "10197", "10202", "10297",
-        #         "10444", "10447", "10597", "10649", "10713",
-        #         "11139", "11247", "12329", "12443",
-        #         "20132", "20839", "49543"
-        #     }
-        #     df_hr = pd.read_excel(
-        #         self.file8_path.get(),
-        #         sheet_name="GOC",
-        #         header=0
-        #     )
-        #     # ✅ CHUẨN HÓA MÃ NV – CHỈ GIỮ CHỮ SỐ
-        #     mn_col = df_hr.iloc[:, 1].apply(
-        #         lambda x: ''.join(filter(str.isdigit, str(x)))
-        #     )
-            
-        #     # ✅ LOẠI DÒNG KHÔNG CÓ MÃ NV
-        #     mask_has_nv = mn_col != ""
-        #     mn_col = mn_col[mask_has_nv]
-        #     df_hr = df_hr.loc[mask_has_nv]
-        #     # ===== CỘT K – TRẠNG THÁI HỢP ĐỒNG =====
-        #     # index cột K = 10
-        #     status_col = df_hr.iloc[:, 10].astype(str).str.upper()
-        #     # ✅ NV nghỉ do KTHD
-        #     mask_kthd = status_col.str.contains("KTHD", na=False)
-        #     # ✅ NV nghỉ do danh sách cố định
-        #     mask_fixed_leave = mn_col.isin(fixed_leave_codes)
-        #     # ✅ MASK NGHỈ VIỆC CUỐI
-        #     mask_leave_final = mask_kthd | mask_fixed_leave
-        #     # ✅ MASK NV CÒN LÀM
-        #     mask_active_nv = ~mask_leave_final
-        #     # ====== ✅ TỔNG SỐ NGƯỜI ======
-        #     total_people = mn_col.nunique()
-        #     # ====== ✅ NV GIA CÔNG ======
-        #     processing_staff = (
-        #         mn_col[~mn_col.isin(fixed_leave_codes)].nunique()
-        #     )
-        #     self.log(
-        #         f"File 8: Tổng số người = {total_people}, "
-        #         f"NV Gia công = {processing_staff} "
-        #         f"(loại fixed + KTHD)"
-        #     )
-        #     col_g = pd.to_numeric(df_hr.iloc[:, 6], errors="coerce")
-        #     col_h = pd.to_numeric(df_hr.iloc[:, 7], errors="coerce")
-        #     sum_gh_each = col_g.add(col_h, fill_value=0)
-        #     # ✅ GIỜ FILE 8 RIÊNG CHO ROW 18
-        #     hours_11928_file8 = sum_gh_each[mn_col == "11928"].sum()
-        #     hours_12157_file8 = sum_gh_each[mn_col == "12157"].sum()
-        #     # ✅ ĐIỀU KIỆN CHUẨN: PHẢI CÓ MÃ NV + KHÔNG NGHỈ
-        #     mask_active_nv_final = (mn_col != "") & (~mn_col.isin(fixed_leave_codes))
-        #     total_gh_after_leave = sum_gh_each[mask_active_nv_final].sum()
-        #     # ✅ CHỈ TÍNH NV CÒN LÀM VIỆC
-        #     total_gh_after_leave = sum_gh_each[mask_active_nv].sum()
-        #     self.log(
-        #         f"File Giờ NS: Tổng giờ NV trực tiếp (row13) = {total_gh_after_leave:.2f}"
-        #     )
-        #     # =============================
-        #     # FILE 1 - THỜI GIAN GIA CÔNG
-        #     # =============================
-        #     df_tg = pd.read_excel(
-        #         self.file1_path.get(),
-        #         sheet_name="Thời gian gia công",
-        #         header=0
-        #     )
-
-        #     nv_col = df_tg.iloc[:, 7].astype(str).str.strip()   # cột H (mã NV)
-        #     type_col = df_tg.iloc[:, 8].astype(str).str.strip() # cột I
-        #     time_l = pd.to_numeric(df_tg.iloc[:, 11], errors="coerce")  # cột L (phút)
-        #     # NV 11928
-        #     total_hours_11928 = time_l[nv_col == "11928"].sum() / 60
-        #     final_11928 = total_hours_11928 - hours_11928_file8
-        #     # NV 12157
-        #     total_hours_12157 = time_l[nv_col == "12157"].sum() / 60
-        #     final_12157 = total_hours_12157 - hours_12157_file8
-        #     # Loại M
-        #     total_hours_M = time_l[type_col == "M"].sum() / 60
-        #     self.log(
-        #         f"FILE1: 11928={final_11928:.2f}, "
-        #         f"12157={final_12157:.2f}, M={total_hours_M:.2f}"
-        #     )
-        #     tt_code = df_ttkh.iloc[:, 0].astype(str).str.strip().str.upper()
-        #     mask_code_valid = tt_code.apply(is_valid_code_group)
-        #     # ==================================================
-        #     # ✅ KHUÔN – TÍNH ĐÚNG HÀNG 49 & 66 (THEO DÒNG TT)
-        #     # ==================================================
-        #     # --- LOAD SNO ---
-        #     df_sno = pd.read_excel(SNO_FIXED_PATH, header=0)
-        #     col_sno = df_sno.iloc[:, 0].astype(str).str.strip().str.upper()
-        #     sno_set = set(col_sno)
-        #     # --- TUÂN THỦ ---
-        #     tt_msyc = df_ttkh.iloc[:, 0].astype(str).str.strip().str.upper()
-        #     tt_sno  = df_ttkh.iloc[:, 2].astype(str).str.strip().str.upper()
-        #     col_o = pd.to_numeric(df_ttkh.iloc[:, 14], errors="coerce")  # O
-        #     col_r = pd.to_numeric(df_ttkh.iloc[:, 17], errors="coerce")  # R
-        #     # --- MASK ---
-        #     mask_khuon_code = tt_msyc.apply(is_valid_code_group)
-        #     mask_sno = tt_sno.isin(sno_set)
-        #     mask_khuon_final = mask_match & mask_khuon_code & mask_sno
-        #     # --- HÀNG 49 ---
-        #     valid_o = col_o[mask_khuon_final]
-        #     result_o_khuon = valid_o.mean() if not valid_o.empty else 0
-        #     # --- HÀNG 66 ---
-        #     valid_r = col_r[mask_khuon_final]
-        #     result_r_khuon = valid_r.mean() if not valid_r.empty else 0
-        #     # ==================================================
-        #     # ✅ MASK KHÁC = MATCH − MÁY TĐ − KHUÔN
-        #     # ==================================================
-        #     mask_khac = (
-        #         mask_match
-        #         & ~mask_L213          # loại Máy TĐ
-        #         & ~mask_khuon_final  # loại Khuôn
-        #     )
-        #     # =============================
-        #     # LT Tr/B Nhận – H/Thành (Khác)
-        #     # =============================
-        #     valid_o_khac = col_o[mask_khac]
-        #     result_o_khac = valid_o_khac.mean() if not valid_o_khac.empty else 0
-        #     self.log(
-        #         f"KHÁC - o: COUNT={valid_o_khac.count()}, "
-        #         f"MEAN={result_o_khac:.2f}"
-        #     )
-        #     # =============================
-        #     # LT Tr/B G/CÔNG – H/THÀNH (KHÁC)
-        #     # =============================
-        #     valid_r_khac = col_r[mask_khac]
-        #     result_r_khac = valid_r_khac.mean() if not valid_r_khac.empty else 0
-        #     self.log(
-        #         f"KHÁC - R: COUNT={valid_r_khac.count()}, "
-        #         f"MEAN={result_r_khac:.2f}"
-        #     )
-        #     # ✅ TỬ SỐ: tổng O của các dòng match
-        #     sum_o_match = col_o[mask_match].sum()
-        #     sum_o_L213 = col_o[mask_L213].sum()
-        #     # sum_o_khuon = pd.to_numeric(df_khuon.iloc[:, 14], errors="coerce").sum()
-        #     # ✅ TỬ SỐ: tổng R của các dòng match
-        #     sum_r_match = col_r[mask_match].sum()
-        #     sum_r_L213 = col_r[mask_L213].sum()
-        #     # sum_r_khuon = pd.to_numeric(df_khuon.iloc[:, 17], errors="coerce").sum()
-        #     # ✅ MẪU SỐ: số dòng có dữ liệu ở cột O (trừ header)
-        #     # ✅ CHỈ ĐẾM O Ở NHỮNG DÒNG MATCH
-        #     count_o_total = col_o[mask_match].notna().sum()
-        #     count_o_L213 = col_o[mask_L213].notna().sum()
-        #     # ✅ MẪU SỐ: số dòng có dữ liệu ở cột R (trừ header)
-        #     # ✅ CHỈ ĐẾM R Ở NHỮNG DÒNG MATCH
-        #     count_r_total = col_r[mask_match].notna().sum()
-        #     count_r_L213 = col_r[mask_L213].notna().sum()
-
-        #     # ✅ KẾT QUẢ CUỐI
-        #     result_ratio_o = sum_o_match / count_o_total if count_o_total != 0 else 0
-        #     result_o_L213 = sum_o_L213 / count_o_L213 if count_o_L213 != 0 else 0
-        #     # result_o_khuon = pd.to_numeric(df_khuon.iloc[:, 14], errors="coerce").mean()
-        #     result_ratio_r = sum_r_match / count_r_total if count_r_total != 0 else 0
-        #     result_r_L213 = sum_r_L213 / count_r_L213 if count_r_L213 != 0 else 0
-        #     # result_r_khuon = pd.to_numeric(df_khuon.iloc[:, 17], errors="coerce").mean()
-        #     self.log(
-        #         f"指標1 row44: SUM(O match)={sum_o_match}, "
-        #         f"COUNT(O)={count_o_total}, RESULT={result_ratio_o}"
-        #     )
-        #     self.log(
-        #         f"L213 - O: SUM={sum_o_L213}, COUNT={count_o_L213}, RESULT={result_o_L213}"
-        #     )
-        #     # self.log(
-        #     #     f"Khuon - O: SUM={sum_o_khuon}, COUNT={count_khuon}, RESULT={result_o_khuon}"
-        #     # )
-            
-        #     self.log(
-        #         f"指標1 row61: SUM(R match)={sum_r_match}, "
-        #         f"COUNT(R match)={count_r_total}, "
-        #         f"RESULT={result_ratio_r}"
-        #     )
-        #     self.log(
-        #         f"L213 - R: SUM={sum_r_L213}, COUNT={count_r_L213}, RESULT={result_r_L213}"
-        #     )
-            
-        #     # =============================
-        #     # GHI VÀO TEMPLATE
-        #     # =============================
-        #     wb = openpyxl.load_workbook(current_file)
-        #     ws = wb["機械別実績"]
-        #     ws_machine = ws
-        #     for row in range(5, ws.max_row + 1):
-        #         raw_code = self.get_merged_cell_value(ws, row, 3)
-        #         machine_code = normalize_machine_code(raw_code)
-        #         if not machine_code:
-        #             continue
-        #         cell = f"{target_col_letter}{row}"
-        #         ws[cell] = machine_time.get(machine_code, 0)
-        #         ws[cell].number_format = "#,##0"
-        #     # HÀng 2 ← Tổng số ngày làm việc
-        #     ws_machine[f"{target_col_letter}2"] = work_days
-        #     ws_machine[f"{target_col_letter}2"].number_format = "#,##0"
-        #     # =============================
-        #     # CHỈ SỐ HÀNG 39 - 指標1
-        #     # 100 * (BV hoàn thành - BV trễ hẹn) / BV hoàn thành
-        #     # =============================
-        #     completed_bv = total_rows_ht
-        #     late_bv = late_bv_count
-        #     if completed_bv > 0:
-        #         ratio_bv_on_time = 100 * (completed_bv - late_bv) / completed_bv
-        #     else:
-        #         ratio_bv_on_time = 0
-            
-        #     # Tránh chia 0
-        #     if completed_bv > 0:
-        #         row79_value = 1 - (bhckt_count / completed_bv)
-        #         row84_value = 1 - (bhccd_count / completed_bv)
-        #     else:
-        #         row79_value = 0
-        #         row84_value = 0
-        #     # =============================
-        #     # GHI VÀO 指標1
-        #     # Tháng 1 bắt đầu từ cột B
-        #     # =============================
-        #     ws_kpi1 = wb["指標1"]
-        #     # Hàng 19 ← tổng số bản vẽ nhận
-        #     ws_kpi1[f"{target_col_kpi1}19"] = total_rows
-        #     ws_kpi1[f"{target_col_kpi1}19"].number_format = "#,##0"
-        #     # Hàng 4 ← tổng số pcs nhận
-        #     ws_kpi1[f"{target_col_kpi1}4"] = total_quantity
-        #     ws_kpi1[f"{target_col_kpi1}4"].number_format = "#,##0"
-        #     # Hàng 24 ← số bản vẽ tồn đọng
-        #     ws_kpi1[f"{target_col_kpi1}24"] = total_rows_ton
-        #     ws_kpi1[f"{target_col_kpi1}24"].number_format = "#,##0"
-        #     # Hàng 9 ← tổng số pcs tồn đọng
-        #     ws_kpi1[f"{target_col_kpi1}9"] = total_qty_ton
-        #     ws_kpi1[f"{target_col_kpi1}9"].number_format = "#,##0"
-        #     # Hàng 29 ← tổng số bản vẽ hoàn thành
-        #     ws_kpi1[f"{target_col_kpi1}29"] = total_rows_ht
-        #     ws_kpi1[f"{target_col_kpi1}29"].number_format = "#,##0"
-        #     # Hàng 14 ← tổng số pcs hoàn thành
-        #     ws_kpi1[f"{target_col_kpi1}14"] = total_qty_ht
-        #     ws_kpi1[f"{target_col_kpi1}14"].number_format = "#,##0"
-        #     # Hàng 44 ← Tổng số LT Tr/B Nhận-H/Thành
-        #     ws_kpi1[f"{target_col_kpi1}44"] = result_ratio_o
-        #     ws_kpi1[f"{target_col_kpi1}44"].number_format = "0.00"
-        #     # Hàng 61 ← Tổng số LT Tr/B BĐGC-H/Thành
-        #     ws_kpi1[f"{target_col_kpi1}61"] = result_ratio_r
-        #     ws_kpi1[f"{target_col_kpi1}61"].number_format = "0.00"
-        #     # Hàng 53 ← O / count O (L213)
-        #     ws_kpi1[f"{target_col_kpi1}53"] = result_o_L213
-        #     ws_kpi1[f"{target_col_kpi1}53"].number_format = "0.00"
-        #     # Hàng 70 ← R / count R (L213)
-        #     ws_kpi1[f"{target_col_kpi1}70"] = result_r_L213
-        #     ws_kpi1[f"{target_col_kpi1}70"].number_format = "0.00"
-        #     #Hàng 49 ← O (SNO + nhóm A/B)
-        #     ws_kpi1[f"{target_col_kpi1}49"] = result_o_khuon
-        #     ws_kpi1[f"{target_col_kpi1}49"].number_format = "0.00"
-        #     #Hàng 66 ← R (SNO + nhóm A/B)
-        #     ws_kpi1[f"{target_col_kpi1}66"] = result_r_khuon
-        #     ws_kpi1[f"{target_col_kpi1}66"].number_format = "0.00"
-        #     # Hàng 34 ← từ file 7 hàng 28
-        #     ws_kpi1[f"{target_col_kpi1}34"] = val_row28
-        #     ws_kpi1[f"{target_col_kpi1}34"].number_format = "#,##0"
-        #     # HÀNG 39 ← % BV đúng hạn
-        #     ws_kpi1[f"{target_col_kpi1}39"] = ratio_bv_on_time / 100
-        #     ws_kpi1[f"{target_col_kpi1}39"].number_format = "0.0%"
-        #     self.log(f"指標1 row39 = 100 * ({completed_bv} - {late_bv}) / {completed_bv} = {ratio_bv_on_time:.2f}%")
-        #     # HÀNG 89 ← Số kiện KNKH
-        #     ws_kpi1[f"{target_col_kpi1}89"] = knkh_cases
-        #     ws_kpi1[f"{target_col_kpi1}89"].number_format = "#,##0"
-        #     self.log(f"指標1 row89 (Số kiện KNKH) = {knkh_cases}")
-        #     # HÀNG 79 ← 1 - BHCKT / BV hoàn thành
-        #     ws_kpi1[f"{target_col_kpi1}79"] = row79_value
-        #     ws_kpi1[f"{target_col_kpi1}79"].number_format = "0.00%"
-
-        #     self.log(f"指標1 row79 = 1 - {bhckt_count}/{completed_bv} = {row79_value:.2%}")
-        #     # HÀNG 84 ← 1 - BHCCD / BV hoàn thành
-        #     ws_kpi1[f"{target_col_kpi1}84"] = row84_value
-        #     ws_kpi1[f"{target_col_kpi1}84"].number_format = "0.00%"
-        #     self.log(f"指標1 row84 = 1 - {bhccd_count}/{completed_bv} = {row84_value:.2%}")
-        #     # ✅ HÀNG 57 ← LT Tr/B Nhận-H/Thành (Khác)
-        #     ws_kpi1[f"{target_col_kpi1}57"] = result_o_khac
-        #     ws_kpi1[f"{target_col_kpi1}57"].number_format = "0.00"
-        #     # ✅ HÀNG 74 ← LT Tr/B G/công-H/Thành (Khác)
-        #     ws_kpi1[f"{target_col_kpi1}74"] = result_r_khac
-        #     ws_kpi1[f"{target_col_kpi1}74"].number_format = "0.00"
-        #     # =============================
-        #     # GHI VÀO 指標２(内作)
-        #     # =============================
-        #     ws_kpi2 = wb["指標２(内作)"]
-        #     row = 9
-        #     while row <= ws_kpi2.max_row:
-        #         cd_raw = self.get_merged_cell_value(ws_kpi2, row, 1)
-        #         cd = normalize_cd_from_template(cd_raw)
-        #         if cd:
-        #             ws_kpi2[f"{target_col_kpi2}{row}"] = bv_sum_by_cd.get(cd, 0)
-        #             ws_kpi2[f"{target_col_kpi2}{row}"].number_format = "#,##0"
-        #         row += 3
-        #     # Map: công đoạn (LA, LN, MA...) → row Số phế phẩm
-        #     kpi2_phepham_row_map = {}
-        #     row = 9  # dòng ALL
-        #     while row <= ws_kpi2.max_row:
-        #         cd_raw = self.get_merged_cell_value(ws_kpi2, row, 1)
-        #         if cd_raw:
-        #             cd = normalize_cd_from_template(cd_raw)
-        #             if cd:
-        #                 # dòng Số phế phẩm = dòng hiện tại + 1
-        #                 kpi2_phepham_row_map[cd] = row + 1
-        #         row += 3
-        #     # =============================
-        #     # RESET số phế phẩm = 0 cho tất cả công đoạn 内作
-        #     # =============================
-        #     for phepham_row in kpi2_phepham_row_map.values():
-        #         ws_kpi2[f"{target_col_kpi2}{phepham_row}"] = 0
-        #         ws_kpi2[f"{target_col_kpi2}{phepham_row}"].number_format = "#,##0"
-        #     # =============================
-        #     # GHI THÊM VÀO 指標４（生産性）
-        #     # =============================
-        #     ws_kpi4 = wb["指標４（生産性) "]
-        #     # Hàng 38 ← Tổng tiền hoàn thành
-        #     ws_kpi4[f"{target_col_kpi4}38"] = total_money_usd
-        #     ws_kpi4[f"{target_col_kpi4}38"].number_format = "#,##0"
-        #     # Hàng 17 ← Tổng thời gian cột J
-        #     ws_kpi4[f"{target_col_kpi4}17"] = total_time_j
-        #     ws_kpi4[f"{target_col_kpi4}17"].number_format = "#,##0.00"
-        #     # Hàng 16 ← Tổng thời gian cột K
-        #     ws_kpi4[f"{target_col_kpi4}16"] = total_time_k
-        #     ws_kpi4[f"{target_col_kpi4}16"].number_format = "#,##0.00"
-        #     # Hàng 43 ← từ file 7 hàng 29
-        #     ws_kpi4[f"{target_col_kpi4}43"] = val_row29
-        #     ws_kpi4[f"{target_col_kpi4}43"].number_format = "#,##0"
-        #     # Hàng 44 ← từ file 7 hàng 30
-        #     ws_kpi4[f"{target_col_kpi4}44"] = val_row30
-        #     ws_kpi4[f"{target_col_kpi4}44"].number_format = "#,##0"
-        #     # HÀng 9 ← Tổng số người
-        #     ws_kpi4[f"{target_col_kpi4}9"] = total_people
-        #     ws_kpi4[f"{target_col_kpi4}9"].number_format = "#,##0"
-        #     # HÀng 10 ← NV Gia công
-        #     ws_kpi4[f"{target_col_kpi4}10"] = processing_staff
-        #     ws_kpi4[f"{target_col_kpi4}10"].number_format = "#,##0"
-        #     # HÀNG 18 ← T/G làm việc có người (logic RIÊNG, KHÔNG LIÊN QUAN FILE 8)
-        #     total_deduct = final_11928 + final_12157 + total_hours_M
-        #     row18_value = total_time_j - total_deduct
-        #     ws_kpi4[f"{target_col_kpi4}18"] = row18_value
-        #     ws_kpi4[f"{target_col_kpi4}18"].number_format = "#,##0"
-        #     self.log(
-        #         f"指標４ row18 = {total_time_j:.2f} "
-        #         f"- (11928:{final_11928:.2f} + 12157:{final_12157:.2f} + M:{total_hours_M:.2f}) "
-        #         f"= {row18_value:.2f}"
-        #     )
-        #     # HÀNG 13 ← T/G NV trực tiếp (FILE 8 – đã loại NV nghỉ)
-        #     ws_kpi4[f"{target_col_kpi4}13"] = total_gh_after_leave
-        #     ws_kpi4[f"{target_col_kpi4}13"].number_format = "#,##0.00"
-        #     self.log(
-        #         f"指標４ row13 (GOC sau trừ NV nghỉ) = {total_gh_after_leave:.2f}"
-        #     )
-        #     # =============================
-        #     # GHI VÀO 指標3（工程毎負荷時間）
-        #     # =============================
-        #     ws_kpi3 = wb["指標3（工程毎負荷時間)"]
-        #     for row in range(5, ws_kpi3.max_row + 1):
-        #         cd_in_kpi = ws_kpi3[f"C{row}"].value
-        #         if cd_in_kpi is None:
-        #             continue
-        #         cd_in_kpi = str(cd_in_kpi).strip()
-        #         if cd_in_kpi in cd_time_map:
-        #             ws_kpi3[f"{target_col_kpi3}{row}"] = cd_time_map[cd_in_kpi]
-        #             ws_kpi3[f"{target_col_kpi3}{row}"].number_format = "#,##0"
-        #     # =============================
-        #     # GHI VÀO 指標２(外作)
-        #     # =============================
-        #     ws_kpi2_out = wb["指標２(外作)"]
-        #     row = 12
-        #     while row <= ws_kpi2_out.max_row:
-        #         a_val = ws_kpi2_out[f"A{row}"].value
-        #         b_val = ws_kpi2_out[f"B{row}"].value
-        #         if a_val is None or b_val is None:
-        #             row += 1
-        #             continue
-        #         key = (str(a_val).strip(), str(b_val).strip())
-        #         label_draw = str(ws_kpi2_out[f"C{row}"].value).strip()
-        #         label_ng   = str(ws_kpi2_out[f"C{row+1}"].value).strip()
-        #         if key in out_map:
-        #             file7_bv, file7_ng = out_map[key]
-        #             if label_draw == "Số bản vẽ" and pd.notna(file7_bv):
-        #                 ws_kpi2_out[f"{target_col_kpi2_out}{row}"] = file7_bv
-        #             if label_ng == "Số phế phẩm" and pd.notna(file7_ng):
-        #                 ws_kpi2_out[f"{target_col_kpi2_out}{row+1}"] = file7_ng
-        #         row += 3
-        #     others_count = 0
-        #     for cd, count in bhccd_count_by_cd.items():
-        #         if cd in kpi2_phepham_row_map:
-        #             phepham_row = kpi2_phepham_row_map[cd]
-        #             ws_kpi2[f"{target_col_kpi2}{phepham_row}"] = count
-        #             ws_kpi2[f"{target_col_kpi2}{phepham_row}"].number_format = "#,##0"
-        #         else:
-        #             others_count += count
-        #     ws_kpi2[f"{target_col_kpi2}57"] = others_count
-        #     ws_kpi2[f"{target_col_kpi2}57"].number_format = "#,##0"
-                
-        #     wb.save(current_file)
-        #     self.log("✅ Hoàn thành")
-        #     self.status_label.config(text="Hoàn thành", fg="green")
-
-        # except Exception as e:
-        #     self.log(f"❌ Lỗi: {e}")
-        #     self.status_label.config(text="Lỗi", fg="red")
-        # finally:
-        #     self.progress.stop()
-        #     self.btn_process.config(state="normal")
-
-
-    
-
-
+         
 def read_money_vnd_from_file11(
     file_path: str,
     sheet_name: str,
@@ -1199,7 +449,7 @@ def read_money_vnd_from_file11(
 
     money_row = None
 
-    # ✅ QUÉT TOÀN SHEET – CHỈ NHẬN DÒNG CÓ BOTH: 'SỐ TIỀN HOÀN THÀNH' + 'VND'
+    # QUÉT TOÀN SHEET – CHỈ NHẬN DÒNG CÓ BOTH: 'SỐ TIỀN HOÀN THÀNH' + 'VND'
     for r in range(df.shape[0]):
         row_text = "".join(norm(v) for v in df.iloc[r].values if isinstance(v, str))
         if key_money in row_text and key_vnd in row_text:
@@ -1209,7 +459,7 @@ def read_money_vnd_from_file11(
     if money_row is None:
         raise Exception("❌ Không tìm thấy dòng 'Số tiền hoàn thành (VND)' trong FILE 11")
 
-    # ✅ CỘT THEO THÁNG (T1 = C = index 2)
+    # CỘT THEO THÁNG (T1 = C = index 2)
     col_month = 2 + (month - 1)
 
     raw = df.iat[money_row, col_month]
@@ -1227,7 +477,7 @@ def read_money_vnd_from_file11(
 
     if debug:
         print(
-            "✅ FILE 11 – READ MONEY (FINAL)\n"
+            "FILE 11 – READ MONEY (FINAL)\n"
             f"   Money row      = {money_row}\n"
             f"   Month col      = {col_month}\n"
             f"   Raw cell       = {raw}\n"
@@ -1258,7 +508,7 @@ def read_phe_pham_from_file12(
     key_target = norm("Số công phế phẩm")
     target_row = None
 
-    # ✅ Tìm hàng: Ưu tiên hàng có chứa từ khóa và CÓ DỮ LIỆU SỐ ở cột tháng
+    # Tìm hàng: Ưu tiên hàng có chứa từ khóa và CÓ DỮ LIỆU SỐ ở cột tháng
     col_month = 2 + (month - 1) # T1=C(2), T4=F(5)
 
     for r in range(df.shape[0]):
@@ -1284,7 +534,7 @@ def read_phe_pham_from_file12(
     # Chuyển đổi tọa độ sang tên cột Excel để debug (ví dụ: 5 -> F)
     col_name = chr(65 + col_month) if col_month < 26 else str(col_month)
 
-    # ✅ Xử lý số liệu an toàn: Giữ nguyên nếu là số, chỉ xử lý chuỗi nếu cần
+    # Xử lý số liệu an toàn: Giữ nguyên nếu là số, chỉ xử lý chuỗi nếu cần
     if isinstance(raw, (int, float)):
         val = raw
     else:
@@ -1293,7 +543,7 @@ def read_phe_pham_from_file12(
     val = 0.0 if pd.isna(val) else float(val)
 
     if debug:
-        print(f"✅ FILE 12 – Đã đọc ô {col_name}{target_row + 1}: Giá trị = {val}")
+        print(f"FILE 12 – Đã đọc ô {col_name}{target_row + 1}: Giá trị = {val}")
 
     return val
 
@@ -1335,7 +585,7 @@ def run_kpi():
             copyfile(TEMPLATE_PATH, current_file)
             print("📄 Tạo file mới từ template")
     else:
-        print("📄 File KPI tháng đã tồn tại → cập nhật tiếp")
+        print("📄 File KPI tháng đã tồn tại -> cập nhật tiếp")
 
     # ==================================================
     # FILE 9 – BHC (BHCKT & BHCCD)
@@ -1371,10 +621,10 @@ def run_kpi():
         .to_dict()
     )
 
-    print(f"✅ BHCKT = {bhckt_count}, BHCCD = {bhccd_count}")
+    print(f"BHCKT = {bhckt_count}, BHCCD = {bhccd_count}")
 
     # =============================
-    # MAP THÁNG → CỘT TEMPLATE
+    # MAP THÁNG -> CỘT TEMPLATE
     # =============================
     target_col_letter      = excel_col(12 + month - 1)  # 機械別実績
     target_col_kpi1        = excel_col(2  + month - 1)  # 指標1
@@ -1403,8 +653,8 @@ def run_kpi():
     ws_kpi1[f"{target_col_kpi1}79"].number_format = "0%"
 
 
-    print("✅ Ghi KPI FILE 9 thành công")
-    print("✅ KPI BATCH DONE")
+    print("Ghi KPI FILE 9 thành công")
+    print("KPI BATCH DONE")
 
     # ==================================================
     # FILE 2 – DOWNLOAD1
@@ -1412,7 +662,7 @@ def run_kpi():
     path_file2 = FILE_CONFIG["file2"]["path"]
 
     # --------------------------------------------------
-    # (1) TỈ LỆ HOẠT ĐỘNG MÁY → 機械別実績
+    # (1) TỈ LỆ HOẠT ĐỘNG MÁY -> 機械別実績
     # --------------------------------------------------
     df_machine = pd.read_excel(
         path_file2,
@@ -1433,7 +683,7 @@ def run_kpi():
         .to_dict()
     )
 
-    print(f"✅ FILE 2: Tổng hợp {len(machine_time)} máy")
+    print(f"FILE 2: Tổng hợp {len(machine_time)} máy")
 
     wb = openpyxl.load_workbook(current_file)
     ws_machine = wb["機械別実績"]
@@ -1454,7 +704,7 @@ def run_kpi():
         cell = f"{col_machine}{row}"
 
         # =========================
-        # ✅ RULE ĐẶC BIỆT: GJ
+        # RULE ĐẶC BIỆT: GJ
         # =========================
         if mc == "GJ02":
             ws_machine[cell] = gj_half_time
@@ -1469,7 +719,7 @@ def run_kpi():
             ws_machine[cell] = 0
 
         # =========================
-        # ✅ RULE BÌNH THƯỜNG
+        # RULE BÌNH THƯỜNG
         # =========================
         else:
             ws_machine[cell] = machine_time.get(mc, 0)
@@ -1484,7 +734,7 @@ def run_kpi():
         f"GJ02 = {gj_half_time}, GJ03 = {gj_half_time}"
     )
     # --------------------------------------------------
-    # (2) BV,PCS HT TRONG THÁNG THEO CĐ → 指標２(内作)
+    # (2) BV,PCS HT TRONG THÁNG THEO CĐ -> 指標２(内作)
     # --------------------------------------------------
     df_bv_cd = pd.read_excel(
         path_file2,
@@ -1505,7 +755,7 @@ def run_kpi():
         .to_dict()
     )
 
-    print(f"✅ FILE 2: BV theo công đoạn = {len(bv_sum_by_cd)}")
+    print(f"FILE 2: BV theo công đoạn = {len(bv_sum_by_cd)}")
 
     # ==================================================
     # 指標２(内作) – BV & PHẾ PHẨM (VÁ HOÀN CHỈNH CUỐI)
@@ -1514,7 +764,7 @@ def run_kpi():
     col_kpi2 = excel_col(3 + month - 1)
 
     # --------------------------------------------------
-    # 1️⃣ LẤY DANH SÁCH CÔNG ĐOẠN CÓ TRONG SHEET
+    # LẤY DANH SÁCH CÔNG ĐOẠN CÓ TRONG SHEET
     # (bỏ dòng ALL, bắt đầu từ dòng 12)
     # --------------------------------------------------
     valid_cd_in_sheet = []
@@ -1528,7 +778,7 @@ def run_kpi():
         row += 3
 
     # --------------------------------------------------
-    # 2️⃣ GHI BV + PHẾ PHẨM THEO CÔNG ĐOẠN
+    # GHI BV + PHẾ PHẨM THEO CÔNG ĐOẠN
     # --------------------------------------------------
     row = 12
     while row <= ws_kpi2.max_row:
@@ -1547,7 +797,7 @@ def run_kpi():
         row += 3
 
     # --------------------------------------------------
-    # 3️⃣ TÍNH TỔNG BV (ROW 9 – CHỈ THEO SHEET)
+    # TÍNH TỔNG BV (ROW 9 – CHỈ THEO SHEET)
     # --------------------------------------------------
     total_bv_all = sum(
         bv_sum_by_cd.get(cd, 0)
@@ -1558,7 +808,7 @@ def run_kpi():
     ws_kpi2[f"{col_kpi2}9"].number_format = "#,##0"
 
     # --------------------------------------------------
-    # 4️⃣ PHẾ PHẨM KHÁC → HÀNG 57
+    # PHẾ PHẨM KHÁC -> HÀNG 57
     # --------------------------------------------------
     phepham_khac = sum(
         count
@@ -1570,7 +820,7 @@ def run_kpi():
     ws_kpi2[f"{col_kpi2}57"].number_format = "#,##0"
 
     # --------------------------------------------------
-    # 5️⃣ TỔNG PHẾ PHẨM (ROW 10 = TRONG SHEET + KHÁC)
+    # TỔNG PHẾ PHẨM (ROW 10 = TRONG SHEET + KHÁC)
     # --------------------------------------------------
     phepham_trong_sheet = sum(
         bhccd_count_by_cd.get(cd, 0)
@@ -1583,9 +833,9 @@ def run_kpi():
     ws_kpi2[f"{col_kpi2}10"].number_format = "#,##0"
 
     # --------------------------------------------------
-    # 6️⃣ LOG KIỂM TRA
+    # LOG KIỂM TRA
     # --------------------------------------------------
-    print("✅ 指標２(内作) – CHECK HOÀN CHỈNH")
+    print("指標２(内作) – CHECK HOÀN CHỈNH")
     print("   Công đoạn trong sheet :", valid_cd_in_sheet)
     print("   Tổng BV (Row 9)       :", total_bv_all)
     print("   Phế phẩm trong sheet :", phepham_trong_sheet)
@@ -1595,7 +845,7 @@ def run_kpi():
 
 
     # --------------------------------------------------
-    # (3) NHẬN BV,PCS TRONG THÁNG → 指標1
+    # (3) NHẬN BV,PCS TRONG THÁNG -> 指標1
     # --------------------------------------------------
     df_nhan = pd.read_excel(
         path_file2,
@@ -1607,7 +857,7 @@ def run_kpi():
     col_code_c = df_nhan.iloc[:, 2].astype(str).str.strip().str.upper()  # CỘT C
     col_qty = pd.to_numeric(df_nhan.iloc[:, 4], errors="coerce")
 
-    # ✅ Loại các dòng có "DC-EN-" ở cột C
+    # Loại các dòng có "DC-EN-" ở cột C
     EXCLUDE_PATTERNS = ["DC-EN-"]
 
     mask_exclude = col_code_c.str.contains(
@@ -1615,7 +865,7 @@ def run_kpi():
         na=False
     )
 
-    # ✅ CHỈ GIỮ DÒNG HỢP LỆ:
+    # CHỈ GIỮ DÒNG HỢP LỆ:
     #   - Có STT
     #   - KHÔNG chứa DC-EN-
     mask_valid = col_stt.notna() & ~mask_exclude
@@ -1632,7 +882,7 @@ def run_kpi():
     ).sum()
 
     print(
-        "✅ NHẬN BV,PCS – AFTER FILTER\n"
+        "NHẬN BV,PCS – AFTER FILTER\n"
         f"   Tổng BV hợp lệ = {total_rows}\n"
         f"   Tổng PCS hợp lệ = {total_quantity}\n"
         f"   Bị loại DC-EN- = {mask_exclude.sum()}"
@@ -1654,7 +904,7 @@ def run_kpi():
     # SAVE SAU FILE 2
     # --------------------------------------------------
 
-    print("✅ FILE 2: Ghi dữ liệu xong")
+    print("FILE 2: Ghi dữ liệu xong")
 
     # ==================================================
     # FILE 4 – BV.PCS TỒN ĐỌNG
@@ -1668,11 +918,11 @@ def run_kpi():
     )
     
     col_stt = df_ton.iloc[:, 0]
-    col_code_c = df_ton.iloc[:, 2].astype(str).str.strip().str.upper()  # ✅ CỘT C
+    col_code_c = df_ton.iloc[:, 2].astype(str).str.strip().str.upper()  # CỘT C
     col_qty_ton = pd.to_numeric(df_ton.iloc[:, 4], errors="coerce")
 
     # --------------------------------------------------
-    # ✅ PRE-FILTER: LOẠI DC-EN-
+    # PRE-FILTER: LOẠI DC-EN-
     # --------------------------------------------------
     EXCLUDE_PATTERNS = ["DC-EN-"]
 
@@ -1682,7 +932,7 @@ def run_kpi():
     )
 
     # --------------------------------------------------
-    # ✅ GIỮ DÒNG HỢP LỆ:
+    # GIỮ DÒNG HỢP LỆ:
     #   - Có STT
     #   - PCS > 0
     #   - KHÔNG phải DC-EN-
@@ -1702,7 +952,7 @@ def run_kpi():
 
 
     print(
-        "✅ FILE 4 – BV.PCS TỒN ĐỌNG (AFTER FILTER)\n"
+        "FILE 4 – BV.PCS TỒN ĐỌNG (AFTER FILTER)\n"
         f"   BV tồn hợp lệ     = {total_rows_ton}\n"
         f"   PCS tồn hợp lệ    = {total_qty_ton}\n"
         f"   Bị loại DC-EN-    = {mask_exclude_dc_en.sum()}"
@@ -1720,7 +970,7 @@ def run_kpi():
     ws_kpi1[f"{col_kpi1}9"] = total_qty_ton
     ws_kpi1[f"{col_kpi1}9"].number_format = "#,##0"
 
-    # print(f"✅ FILE 4: BV tồn={total_rows_ton}, PCS tồn={total_qty_ton}")
+    # print(f"FILE 4: BV tồn={total_rows_ton}, PCS tồn={total_qty_ton}")
 
     # ==================================================
     # FILE 3 – SỐ TIỀN HOÀN THÀNH
@@ -1734,17 +984,17 @@ def run_kpi():
     )
 
     col_key = df_ht.iloc[:, 0].astype(str).str.strip()
-    col_c   = df_ht.iloc[:, 2].astype(str).str.strip().str.upper()  # ✅ CỘT C
+    col_c   = df_ht.iloc[:, 2].astype(str).str.strip().str.upper()  # CỘT C
     col_qty = pd.to_numeric(df_ht.iloc[:, 5], errors="coerce")
     col_aq  = pd.to_numeric(df_ht.iloc[:, 42], errors="coerce")
     col_ar  = df_ht.iloc[:, 43].astype(str).str.strip()
 
     # =============================
-    # ✅ PRE-FILTER: LOẠI DC-EN-
+    # PRE-FILTER: LOẠI DC-EN-
     # =============================
     EXCLUDE_PATTERNS = ["DC-EN-"]
 
-    # ✅ PRE-FILTER: LOẠI DC-EN NGAY TỪ GỐC
+    # PRE-FILTER: LOẠI DC-EN NGAY TỪ GỐC
     mask_exclude_dc_en = col_c.str.contains("|".join(EXCLUDE_PATTERNS), na=False)
 
     df_ht_clean = df_ht[~mask_exclude_dc_en]
@@ -1783,7 +1033,7 @@ def run_kpi():
 
 
     print(
-        "✅ FILE 3 – SỐ TIỀN HOÀN THÀNH (AFTER FILTER)\n"
+        "FILE 3 – SỐ TIỀN HOÀN THÀNH (AFTER FILTER)\n"
         f"   Dòng hợp lệ        = {total_rows_ht}\n"
         f"   Tổng PCS           = {total_qty_ht}\n"
         # f"   Tổng tiền (VND)    = {total_money_vnd:,.0f}\n"
@@ -1801,7 +1051,7 @@ def run_kpi():
     )
     
     # --------------------------------------------------
-    # ✅ PRE-FILTER: LOẠI DC-EN- Ở CỘT C
+    # PRE-FILTER: LOẠI DC-EN- Ở CỘT C
     # --------------------------------------------------
     col_code_c = df_ttkh.iloc[:, 2].astype(str).str.strip().str.upper()
 
@@ -1814,7 +1064,7 @@ def run_kpi():
 
 
     print(
-        "✅ TUÂN THỦ KÌ HẠN – AFTER DC-EN FILTER\n"
+        "TUÂN THỦ KÌ HẠN – AFTER DC-EN FILTER\n"
         f"   Tổng dòng ban đầu = {len(df_ttkh)}\n"
         f"   Bị loại DC-EN-    = {mask_exclude_dc_en.sum()}\n"
         f"   Còn lại xử lý     = {len(df_ttkh)}"
@@ -1900,7 +1150,7 @@ def run_kpi():
     ws_kpi1[f"{col_kpi1}74"].number_format = "0.0"
 
     print(
-        f"✅ LT Khuôn(O/R) = {lt_khuon_o:.2f}/{lt_khuon_r:.2f} | "
+        f"LT Khuôn(O/R) = {lt_khuon_o:.2f}/{lt_khuon_r:.2f} | "
         f"L213(O/R) = {lt_L213_o:.2f}/{lt_L213_r:.2f} | "
         f"Khác(O/R) = {lt_khac_o:.2f}/{lt_khac_r:.2f}"
     )
@@ -1926,7 +1176,7 @@ def run_kpi():
     ws_kpi1[f"{col_kpi1}61"].number_format = "0.0"
 
     print(
-        f"✅ LT TỔNG | Ngày nhận = {lt_total_o:.2f} | "
+        f"LT TỔNG | Ngày nhận = {lt_total_o:.2f} | "
         f"LT sao = {lt_total_r:.2f}"
     )
     # ==================================================
@@ -1951,7 +1201,7 @@ def run_kpi():
     ws_kpi1[f"{col_kpi1}84"].number_format = "0%"
 
     print(
-        f"✅ 指標1 CHECK\n"
+        f"指標1 CHECK\n"
         f"   Row79 = {row79_value:.2%}\n"
         f"   Row84 = 100% (FIXED)"
     )
@@ -2014,7 +1264,7 @@ def run_kpi():
     #         ws_kpi3[f"{col_kpi3}{row}"] = cd_time_map[cd]
     #         ws_kpi3[f"{col_kpi3}{row}"].number_format = "#,##0"
 
-    # print("✅ FILE 6: Ghi thời gian công đoạn xong")
+    # print("FILE 6: Ghi thời gian công đoạn xong")
 
     # # ==================================================
     # # FILE 7 – 指標２(外作)
@@ -2062,7 +1312,7 @@ def run_kpi():
     #         ws_kpi2_out[f"{col_kpi2_out}{row+1}"] = out_map[key]["ng"]
     #     row += 3
 
-    # print("✅ FILE 7: 外作 xong")
+    # print("FILE 7: 外作 xong")
     
     # ==================================================
     # FILE 8 – GIỜ NHÂN SỰ (GOC)
@@ -2097,7 +1347,7 @@ def run_kpi():
     note_col = df_hr.iloc[:, 10].astype(str).str.strip().str.upper()
 
     # --------------------------------------------------
-    # ✅ NGƯỜI HỢP LỆ:
+    # NGƯỜI HỢP LỆ:
     #   - Có STT
     #   - KHÔNG phải TS
     # --------------------------------------------------
@@ -2113,7 +1363,7 @@ def run_kpi():
 
 
     # --------------------------------------------------
-    # ✅ CỘT GIỜ (KHÔNG LIÊN QUAN HÀNG 9)
+    # CỘT GIỜ (KHÔNG LIÊN QUAN HÀNG 9)
     # --------------------------------------------------
     h1 = pd.to_numeric(df_hr.iloc[:, 6], errors="coerce")  # cột G
     h2 = pd.to_numeric(df_hr.iloc[:, 7], errors="coerce")  # cột H
@@ -2124,25 +1374,25 @@ def run_kpi():
     col_kpi4 = excel_col(9 + month - 1)
 
     
-    # ✅ HÀNG 9 – TỔNG SỐ NGƯỜI (ĐÃ LOẠI TS)
+    # HÀNG 9 – TỔNG SỐ NGƯỜI (ĐÃ LOẠI TS)
     ws_kpi4[f"{col_kpi4}9"]  = total_people
     ws_kpi4[f"{col_kpi4}9"].number_format = "#,##0"
 
-     # ✅ HÀNG 10 – TỔNG SỐ NGƯỜI TT  (ĐÃ LOẠI TS-KTHD)
+     # HÀNG 10 – TỔNG SỐ NGƯỜI TT  (ĐÃ LOẠI TS-KTHD)
     ws_kpi4[f"{col_kpi4}10"] = processing_staff
     ws_kpi4[f"{col_kpi4}10"].number_format = "#,##0"
 
-    # ✅ HÀNG 13 – TỔNG GIỜ (GIỮ NGUYÊN)
+    # HÀNG 13 – TỔNG GIỜ (GIỮ NGUYÊN)
     ws_kpi4[f"{col_kpi4}13"] = total_hours
     ws_kpi4[f"{col_kpi4}13"].number_format = "#,##0"
 
     print(
-        f"✅ FILE 8 – GOC (CHECK)\n"
+        f"FILE 8 – GOC (CHECK)\n"
         f"   Hàng 9 – Tổng người (loại TS)        = {total_people}\n"
         f"   Hàng 10 – NV gia công (loại KTHD + fixed, không trừ đúp) = {processing_staff}\n"
         f"   Trong đó:\n"
-        f"     • KTHD        = {mask_leave_status.sum()}\n"
-        f"     • Fixed leave = {mask_fixed_leave.sum()}"
+        f"     - KTHD        = {mask_leave_status.sum()}\n"
+        f"     - Fixed leave = {mask_fixed_leave.sum()}"
         f"   Hàng 13 – Tổng giờ NV GC    = {total_hours:.2f}"
     )
 
@@ -2165,17 +1415,17 @@ def run_kpi():
 
     # ==================================================
     # 指標４（生産性) – HÀNG 16 & 17 (THEO COMMENT GỐC)
-    # J, K là PHÚT → đổi sang GIỜ
+    # J, K là PHÚT -> đổi sang GIỜ
     # ==================================================
 
     # Cột J, K trong sheet "Tuân Thủ Kì Hạn"
-    # ✅ LOẠI DC-EN TRONG TUÂN THỦ KÌ HẠN
+    # LOẠI DC-EN TRONG TUÂN THỦ KÌ HẠN
     tt_code_c = df_ttkh.iloc[:, 2].astype(str).str.strip().str.upper()
     mask_not_dc_en_ttkh = ~tt_code_c.str.contains("DC-EN-", na=False)
 
 
 
-    # ✅ CỘT J, K – PHÚT
+    # CỘT J, K – PHÚT
     time_j = pd.to_numeric(df_ttkh.iloc[:, 9], errors="coerce")
     time_k = pd.to_numeric(df_ttkh.iloc[:,10], errors="coerce")
     total_time_j_hours = time_j[mask_match].sum() / 60
@@ -2194,9 +1444,9 @@ def run_kpi():
     ws_kpi4[f"{col_kpi4}16"].number_format = "#,##0"
 
     print(
-        f"🕒 指標４（生産性) | Tháng {month:02d}/{year} | Cột {col_kpi4}\n"
-        f"   • Hàng 16 (Tổng giờ K): {total_time_k_hours:.2f}\n"
-        f"   • Hàng 17 (Tổng giờ J): {total_time_j_hours:.2f}\n"
+        f"指標４（生産性) | Tháng {month:02d}/{year} | Cột {col_kpi4}\n"
+        f"   - Hàng 16 (Tổng giờ K): {total_time_k_hours:.2f}\n"
+        f"   - Hàng 17 (Tổng giờ J): {total_time_j_hours:.2f}\n"
     )
 
     # ==================================================
@@ -2212,7 +1462,7 @@ def run_kpi():
     hours_12157_file8 = sum_gh_each[(mn_col == "12157") & mask_row10].sum()
 
     print(
-        "📘 FILE 8 – GOC (GIỜ CÔNG)\n"
+        "FILE 8 – GOC (GIỜ CÔNG)\n"
         f"   NV 11928 = {hours_11928_file8:.2f} giờ\n"
         f"   NV 12157 = {hours_12157_file8:.2f} giờ"
     )
@@ -2249,11 +1499,11 @@ def run_kpi():
     final_12157 = max(0, total_hours_AA_no_M - hours_12157_file8)
 
     print(
-        "➖ NET SAU TRỪ FILE 8\n"
+        "NET SAU TRỪ FILE 8\n"
         f"   NV 11928  = {total_hours_11928:.2f} - {hours_11928_file8:.2f}"
-        f" → {final_11928:.2f}\n"
+        f" -> {final_11928:.2f}\n"
         f"   NV 12157* = {total_hours_AA_no_M:.2f} - {hours_12157_file8:.2f}"
-        f" → {final_12157:.2f}  (MÁY AA – NO M)"
+        f" -> {final_12157:.2f}  (MÁY AA – NO M)"
     )
 
     # ==================================================
@@ -2263,12 +1513,12 @@ def run_kpi():
     row18_value = max(0, total_time_j_hours - total_deduct)
 
     print(
-        "🧮 TÍNH HÀNG 18\n"
+        "TÍNH HÀNG 18\n"
         f"   Tổng J (giờ)   = {total_time_j_hours:.2f}\n"
         f"   Trừ 11928     = {final_11928:.2f}\n"
         f"   Trừ AA (12157)= {final_12157:.2f}\n"
         f"   Trừ M         = {total_hours_M:.2f}\n"
-        f"   → ROW 18 NET  = {row18_value:.2f}"
+        f"   -> ROW 18 NET  = {row18_value:.2f}"
     )
 
     # ==================================================
@@ -2311,7 +1561,7 @@ def run_kpi():
     ws_kpi1[f"{col_kpi1}89"] = knkh_cases
     ws_kpi1[f"{col_kpi1}89"].number_format = "#,##0"
 
-    print(f"✅ FILE 10: Khiếu nại T{month} = {knkh_cases}")
+    print(f"FILE 10: Khiếu nại T{month} = {knkh_cases}")
 
 
     # ==================================================
@@ -2325,7 +1575,7 @@ def run_kpi():
         file_path=path_file11,
         sheet_name=sheet_file11,
         month=month,
-        exchange_rate=EXCHANGE_RATE,   # ✅ TỶ GIÁ MẶC ĐỊNH
+        exchange_rate=EXCHANGE_RATE,   # TỶ GIÁ MẶC ĐỊNH
         debug=True
     )
 
@@ -2339,13 +1589,13 @@ def run_kpi():
     ws_kpi4[f"{col_kpi4}38"].number_format = "#,##0"
 
     print(
-        f"✅ 指標４（生産性) | Row 38 | Cột {col_kpi4}\n"
+        f"指標４（生産性) | Row 38 | Cột {col_kpi4}\n"
         f"   Giá trị ghi = {money_usd:,.0f} USD"
     )
 
 
     print(
-        "✅ FILE 11 – SỐ TIỀN HOÀN THÀNH\n"
+        "FILE 11 – SỐ TIỀN HOÀN THÀNH\n"
         f"   VND      = {money_vnd:,.0f}\n"
         f"   USD      = {money_usd:,.0f}\n"
         f"   RATE     = {EXCHANGE_RATE}"
@@ -2369,14 +1619,14 @@ def run_kpi():
     ws_kpi4[f"{col_kpi4}25"] = val_phe_pham
     ws_kpi4[f"{col_kpi4}25"].number_format = "#,##0.00"
 
-    print(f"✅ 指標４（生産性) | Row 25 | Cột {col_kpi4} | Giá trị = {val_phe_pham}")
+    print(f"指標４（生産性) | Row 25 | Cột {col_kpi4} | Giá trị = {val_phe_pham}")
 
 
     wb.save(current_file)
-    print("✅ KPI BATCH HOÀN TẤT")
+    print("KPI BATCH HOÀN TẤT")
 
 if __name__ == "__main__":
     try:
         run_kpi()
     except Exception as e:
-        print(f"❌ KPI FAILED: {e}")
+        print(f" KPI FAILED: {e}")
